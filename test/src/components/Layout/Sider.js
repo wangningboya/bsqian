@@ -17,19 +17,19 @@ class Sider extends Component {
                     className={styles.Menu}
                 >
                 <Menu.Item key="/">
-                        <Link to="/">
-                            <Icon type="home" />Home
+                        <Link to="/login">
+                            <Icon type="login" />Login
                         </Link>
                 </Menu.Item>
                 <SubMenu title="aaa">
-                    <Menu.Item key="/users">
-                        <Link to="/users">
-                            <Icon type="bars" />Users
+                    <Menu.Item key="/user">
+                        <Link to="/user">
+                            <Icon type="bars" />User
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="/404">
-                        <Link to="/page-you-dont-know">
-                            <Icon type="frown-circle" />404
+                        <Link to="/index">
+                            <Icon type="frown-circle" />index
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="/antd">

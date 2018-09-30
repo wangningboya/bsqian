@@ -15,15 +15,27 @@ const Login = dynamic({
   app,
   component: () => import('./routes/login/login')
 })
+const Index = dynamic({
+  app,
+  component: () => import('./routes/index/index')
+})
+const User = dynamic({
+  app,
+  component: () => import('./routes/user/user')
+})
   return (
     <ConnectedRouter history={history}>
-    <App>
-      <Switch>
-        <Route path="/" exact component={Login} />
-        <Route path="/login" exact component={Login} />
-        <Route path="*" render={() => <Redirect to="login" />} />
-      </Switch>
-    </App>
+      <div>
+        <App>
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <Route path="/" exact component={Index} />
+            <Route path="/index" exact component={Index} />
+            <Route path="/user" exact component={User} />
+            <Route path="*" render={() => <Redirect to="login" />} />
+          </Switch>
+        </App>
+      </div>
     </ConnectedRouter>
   );
 }

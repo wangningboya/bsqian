@@ -3,19 +3,32 @@ import { connect } from 'dva'
 import { withRouter } from 'dva/router'
 import {MyLayout} from '../components'
 
-import { Layout, Slider } from 'antd';
+import { Layout } from 'antd';
 
 const { Header, Sider, Footer, Content } = MyLayout
 
+
 class App extends Component {
     render() {
-        let { children } = this.props
+        let { children,location } = this.props
+        let { pathname } = location
+        pathname = pathname.startsWith('/') ? pathname : `/${pathname}`
+        if(pathname=='/login'){
+            return (
+                <div>
+                    {children}
+                </div>
+                )
+        }
         return (
             <Layout>
-                <Header></Header>
+                <Header>
+                </Header>
                 <Layout>
                     <Sider></Sider>
-                    <Content></Content>
+                    <Content>
+                        {children}
+                    </Content>
                 </Layout>
                 <Footer></Footer>
             </Layout>
