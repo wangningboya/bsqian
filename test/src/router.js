@@ -30,8 +30,8 @@ const routes = [
     component: () => import('./routes/login/login'),
   },{
     path: '/index',
-    models: () => [import('./models/index')],
-    component: () => import('./routes/index/index'),
+    models: () => [import('./models/home')],
+    component: () => import('./routes/home/home'),
   },{
     path: '/user',
     models: () => [import('./models/user')],

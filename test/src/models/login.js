@@ -1,8 +1,10 @@
 import { userLogin} from '../services/login'
+import { message } from 'antd'
+import { routerRedux } from 'dva/router'
 
 export default {
 
-    namespace:"userLogin",
+    namespace:"login",
 
     state:{
       record:{},
@@ -17,22 +19,20 @@ export default {
         * login ({
         payload = {},
         }, { select, call, put }) {
-           
-        console.log("ssssssssssssss")
-        console.log(payload)
-        console.log(userLogin)
         const result = yield call(userLogin, payload)
-        console.log(result)
-        console.log("asdeasdad")
         if (result && result.success && result.rspCode === '000000') {
-          // const { data } = result
-         yield put({
+          message.success(result.rspMsg)
+          console.log(result)
+          const { data } = result
+          localStorage.setItem('userName', data.userName)
+          yield put({
           type: 'updateState',
           payload: {
              },
-         })
-        } else {
-            // throw data
+          })
+          yield put(routerRedux.push('/index'))
+          } else {
+            message.error(result.rspMsg)
           }
         },
       },

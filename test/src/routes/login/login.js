@@ -13,10 +13,8 @@ const Login =({userLogins, dispatch, form}) => {
         //   if(errors){
         //     return
         //   }
-          alert("111")
-          console.log(values)
           dispatch({
-               type: 'userLogin/login',
+               type: 'login/login',
                payload: values 
             })
         })

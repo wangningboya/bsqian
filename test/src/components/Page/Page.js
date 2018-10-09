@@ -7,7 +7,7 @@ export default class Page extends Component {
     const { children } = this.props
 
     return (
-      <div>
+      <div className={styles.background}>
         {children}
       </div>
     )

@@ -9,11 +9,11 @@ const SubMenu = Menu.SubMenu;
 class Sider extends Component {
     render() {
         return (
-            <Layout.Sider>
+            <Layout.Sider width={300}>
                 <Menu
                     // selectedKeys={[location.pathname]}
                     mode="inline"
-                    theme="dark"
+                    theme="light"
                     className={styles.Menu}
                 >
                 <Menu.Item key="/">

@@ -5,7 +5,7 @@ import {MyLayout} from '../components'
 
 import { Layout } from 'antd';
 
-const { Header, Sider, Footer, Content } = MyLayout
+const { Header, Sider, Content } = MyLayout
 
 
 class App extends Component {
@@ -30,7 +30,6 @@ class App extends Component {
                         {children}
                     </Content>
                 </Layout>
-                <Footer></Footer>
             </Layout>
         )
     }
