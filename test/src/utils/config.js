@@ -1,8 +1,8 @@
 
 
 module.exports = {
-  
+
   api: {
-    userLogin: `/wy/login/login`,
+    userLogin2: `/wy/login/login`,
   },
 }
