@@ -4,7 +4,7 @@ import {Form, Input, Row, Button} from 'antd'
 
 const FormItem = Form.Item
 
-const Login =({userLogin, dispatch, form}) => {
+const Login =({userLogins, dispatch, form}) => {
 
     const {getFieldDecorator, validateFieldsAndScroll} = form
 

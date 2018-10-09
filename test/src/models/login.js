@@ -1,6 +1,4 @@
-import modelExtend from 'dva-model-extend'
-import { pageModel } from 'models/common'
-import { userLogin} from 'services/login'
+import { userLogin} from '../services/login'
 
 export default {
 
@@ -21,18 +19,20 @@ export default {
         payload = {},
         }, { select, call, put }) {
            
-            console.log("ssssssssssssss")
-          const result = yield call(userLogin, payload)
-          if (result && result.success && result.rspCode === '000000') {
-            const { data } = result
-            yield put({
-              type: 'updateState',
-              payload: {
-
-              },
-            })
-          } else {
-            throw data
+        console.log("ssssssssssssss")
+        console.log(payload)
+        console.log(userLogin)
+        const result = yield call(userLogin, payload)
+        console.log("asdeasdad")
+        if (result && result.success && result.rspCode === '000000') {
+          // const { data } = result
+         yield put({
+          type: 'updateState',
+          payload: {
+             },
+         })
+        } else {
+            // throw data
           }
         },
       },
