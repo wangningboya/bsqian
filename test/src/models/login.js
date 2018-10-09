@@ -22,6 +22,7 @@ export default {
         console.log(payload)
         console.log(userLogin)
         const result = yield call(userLogin, payload)
+        console.log(result)
         console.log("asdeasdad")
         if (result && result.success && result.rspCode === '000000') {
           // const { data } = result

@@ -6,7 +6,7 @@ import App from './routes/app'
 import dynamic from 'dva/dynamic' // 路由按需加载
 const { ConnectedRouter } = routerRedux
 
-function RouterConfig({ history,app }) {
+const Routers= function({ history,app }) {
 // const IndexPage = dynamic({
 //     app,
 //     component: () => import('./routes/IndexPage')
@@ -68,4 +68,4 @@ const routes = [
   );
 }
 
-export default RouterConfig;
+export default Routers;

@@ -13,7 +13,7 @@ class App extends Component {
         let { children,location } = this.props
         let { pathname } = location
         pathname = pathname.startsWith('/') ? pathname : `/${pathname}`
-        if(pathname=='/login'){
+        if(pathname==='/login'){
             return (
                 <div>
                     {children}
