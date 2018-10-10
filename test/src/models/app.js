@@ -1,4 +1,4 @@
-import { userQuery } from '../services/app'
+import { userQuery,logout } from '../services/app'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -39,9 +39,6 @@ export default {
           
           if (result && result.success && result.rspCode === '000000') {
             const { data } = result
-            console.log("data")
-            console.log(data.user)
-            console.log("data")
             yield put({
             type: 'updateState',
             payload: {
@@ -55,10 +52,22 @@ export default {
         * logout ({
         payload = {},
         }, { select, call, put }) {
-          localStorage.clear();
-          // yield put({ type: 'query' })
-          yield put(routerRedux.push('/login'));
+          const data = yield call(logout, payload)
+          if (data.success) {
+            message.success(data.rspMsg)
+            localStorage.clear();
+            yield put(routerRedux.push('/login'));
+          }
         },
       },
 
+      reducers: {
+        updateState (state, { payload }) {
+          return {
+            ...state,
+            ...payload,
+          }
+        },
+    
+      },
 }

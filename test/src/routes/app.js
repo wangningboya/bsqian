@@ -9,7 +9,7 @@ const { Header, Sider, Content } = MyLayout
 
 
 const App =({children, location, dispatch, app}) => {
-    const { user, menu } = app
+    let { user, menu } = app
         let { pathname } = location
         pathname = pathname.startsWith('/') ? pathname : `/${pathname}`
         if(pathname==='/login'){
@@ -28,9 +28,6 @@ const App =({children, location, dispatch, app}) => {
           }
         return (
             <Layout>
-                {console.log("headerProps")}
-                {console.log(headerProps)}
-                {console.log("headerProps")}
                 <Header  {...headerProps}>
                 </Header>
                 <Layout>
