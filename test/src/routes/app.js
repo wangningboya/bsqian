@@ -8,9 +8,8 @@ import { Layout } from 'antd';
 const { Header, Sider, Content } = MyLayout
 
 
-class App extends Component {
-    render() {
-        let { children,location } = this.props
+const App =({children, location, dispatch, app}) => {
+    const { user, menu } = app
         let { pathname } = location
         pathname = pathname.startsWith('/') ? pathname : `/${pathname}`
         if(pathname==='/login'){
@@ -20,9 +19,19 @@ class App extends Component {
                 </div>
                 )
         }
+        const headerProps = {
+            menu,
+            user,
+            logout () {
+              dispatch({ type: 'app/logout' })
+            },
+          }
         return (
             <Layout>
-                <Header>
+                {console.log("headerProps")}
+                {console.log(headerProps)}
+                {console.log("headerProps")}
+                <Header  {...headerProps}>
                 </Header>
                 <Layout>
                     <Sider></Sider>
@@ -32,7 +41,6 @@ class App extends Component {
                 </Layout>
             </Layout>
         )
-    }
 }
 
 App.propTypes = {}

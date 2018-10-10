@@ -5,18 +5,23 @@ import styles from './Header.less'
 
 const {SubMenu} = Menu
 
-const Header = ({user}) =>  {
+const Header = ({user, logout}) =>  {
+
+    const logoutuser=()=>{
+        logout();
+    }
+
         return (
                 <Layout.Header  className={styles.background}>
                     <div>
-                        <Menu mode="horizontal">
+                        <Menu mode="horizontal" onClick={logoutuser}>
                         <SubMenu
                             style={{
                             float: 'right',
                             }}
                             title={<span>
                             <Icon type="user" />
-                            {localStorage.getItem("userName")}
+                            {user.realName}
                             </span>}
                         >
                             <Menu.Item key="logout">

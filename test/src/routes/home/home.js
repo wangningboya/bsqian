@@ -11,7 +11,7 @@ class Index extends Component {
                         <Row>
                             <Col span={16}>16</Col>
                             <Col span={4}>4</Col>
-                            <Col span={4}>4</Col>
+                            <Col span={4}>8</Col>
                         </Row>
                     </div>
                 </Page>
