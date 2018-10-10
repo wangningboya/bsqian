@@ -20,18 +20,20 @@ const App =({children, location, dispatch, app}) => {
                 )
         }
         const headerProps = {
-            menu,
             user,
             logout () {
               dispatch({ type: 'app/logout' })
             },
           }
+        const siderProps = {
+            menu,
+        }
         return (
             <Layout>
                 <Header  {...headerProps}>
                 </Header>
                 <Layout>
-                    <Sider></Sider>
+                    <Sider {...siderProps}></Sider>
                     <Content>
                         {children}
                     </Content>

@@ -36,13 +36,14 @@ export default {
             yield put(routerRedux.push('/login'));
           }
           const result = yield call(userQuery, payload)
-          
+          console.log(result)
           if (result && result.success && result.rspCode === '000000') {
             const { data } = result
             yield put({
             type: 'updateState',
             payload: {
-              user:data.user
+              user:data.user,
+              menu:data.authList
               },
             })
           } else {
