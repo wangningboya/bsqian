@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch,Redirect, routerRedux } from 'dva/router';
+import { Router, Route, Switch,Redirect, routerRedux,  } from 'dva/router';
 import IndexPage from './routes/IndexPage';
 import App from './routes/app'
 
@@ -36,12 +36,15 @@ const routes = [
     path: '/user',
     models: () => [import('./models/user')],
     component: () => import('./routes/user/user'),
+  },{
+    path: '/demand',
+    models: () => [import('./models/demand')],
+    component: () => import('./routes/demand/demand'),
   },
   
 ]
   return (
     <ConnectedRouter history={history}>
-      <div>
         <App>
           <Switch>
             {/* <Route path="/login" exact component={Login} />
@@ -49,6 +52,8 @@ const routes = [
             <Route path="/index" exact component={Index} />
             <Route path="/user" exact component={User} />
             <Route path="*" render={() => <Redirect to="login" />} /> */}
+
+            <Route exact path="/" render={() => (<Redirect to="/index" />)} />
             {
             routes.map(({ path, ...dynamics }, key) => (
               <Route key={key}
@@ -63,7 +68,6 @@ const routes = [
           }
           </Switch>
         </App>
-      </div>
     </ConnectedRouter>
   );
 }

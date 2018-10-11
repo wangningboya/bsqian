@@ -25,7 +25,7 @@ const Header = ({user, logout}) =>  {
                             </span>}
                         >
                             <Menu.Item key="logout">
-                                Sign out
+                                登出
                             </Menu.Item>
                         </SubMenu>
                         </Menu>

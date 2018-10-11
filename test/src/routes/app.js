@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { withRouter } from 'dva/router'
+import { Route,withRouter } from 'dva/router'
 import {MyLayout} from '../components'
 
 import { Layout } from 'antd';
+import Demand from './demand/demand'
 
 const { Header, Sider, Content } = MyLayout
 
@@ -36,6 +37,7 @@ const App =({children, location, dispatch, app}) => {
                     <Sider {...siderProps}></Sider>
                     <Content>
                         {children}
+                        {/* <Route path="/demand" exact component={Demand} /> */}
                     </Content>
                 </Layout>
             </Layout>

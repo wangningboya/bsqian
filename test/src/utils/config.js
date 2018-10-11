@@ -9,6 +9,6 @@ module.exports = {
     logout2: `/wy/login/logout`,
     userQuery2: `/wy/user/userQuery`,
     userQuery3: `/wy/user/getUserAndMenu`,
-
+    demandQuery2: '/wy/demand/findDemand',
   },
 }
