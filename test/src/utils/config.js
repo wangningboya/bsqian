@@ -10,5 +10,8 @@ module.exports = {
     userQuery2: `/wy/user/userQuery`,
     userQuery3: `/wy/user/getUserAndMenu`,
     demandQuery2: '/wy/demand/findDemand',
+    projectQuery2:'wy/project/findProject',
+    accQuery2: 'wy/user/getUserByRoleId?roleId=zz',
+    addDemand2: 'wy/demand/addDemand'
   },
 }

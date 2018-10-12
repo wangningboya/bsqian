@@ -22,7 +22,6 @@ export default {
         const result = yield call(userLogin, payload)
         if (result && result.success && result.rspCode === '000000') {
           message.success(result.rspMsg)
-          console.log(result)
           const { data } = result
           localStorage.setItem('userName', data.userName)
           yield put({

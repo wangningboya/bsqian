@@ -1,4 +1,4 @@
-import { demandQuery } from '../services/demand'
+import { demandQuery,projectQuery,accQuery,addDemand } from '../services/demand'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -9,6 +9,9 @@ export default {
     state:{
       demandList:[],
       modalVisible: false,
+      projectList: [],
+      accList: [],
+      pID:"",
     },
 
     subscriptions: {
@@ -30,21 +33,41 @@ export default {
         * query ({
         payload = {},
         }, { select, call, put }) {
-          const result = yield call(demandQuery,payload)
-          console.log(result)
-          if (result && result.success && result.rspCode === '000000') {
-            const {data} = result
+          const demandResult = yield call(demandQuery,payload)
+          const projectResult = yield call(projectQuery)
+          const accResult = yield call(accQuery)
+          console.log(demandResult)
+          if (demandResult && demandResult.success && demandResult.rspCode === '000000' && projectResult && projectResult.success && projectResult.rspCode === '000000' && accResult && accResult.success && accResult.rspCode === '000000') {
             yield put({
               type: 'updateState',
               payload: {
-                demandList:data.demandList,
+                demandList:demandResult.data.demandList,
+                projectList:projectResult.data.projectList,
+                accList:accResult.data.userList,
                 },
               })
           }else{
             
           }
         },
+        * addDemand ({
+        payload = {},
+        }, { select, call, put }) {
+          const result = yield call(addDemand,payload)
+          if (result && result.success && result.rspCode === '000000') {
+            yield put({
+              type: 'updateState',
+              payload: {
+                modalVisible: false
+                },
+              })
+              yield put({ type: 'query' })
+          }else{
+            
+          }
+        },
       },
+      
 
       reducers: {
         updateState (state, { payload }) {

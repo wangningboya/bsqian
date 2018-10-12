@@ -36,7 +36,6 @@ export default {
             yield put(routerRedux.push('/login'));
           }
           const result = yield call(userQuery, payload)
-          console.log(result)
           if (result && result.success && result.rspCode === '000000') {
             const { data } = result
             yield put({
