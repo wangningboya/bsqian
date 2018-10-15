@@ -9,13 +9,13 @@ const Option = Select.Option
 const TextArea = Input.TextArea
 
 const Demand = ({demand, loading, dispatch,form}) =>  {
-  const { demandList,modalVisible, modalTitle, projectList, accList, pID } = demand
+  const { demandList,modalVisible, modalTitle, projectList, accList, pId } = demand
   const { getFieldDecorator, resetFields, setFieldsValue, getFieldValue } = form
       const columns = [{
         align: 'center',
         title: '需求编号',
-        dataIndex: 'demandNO',
-        key: 'demandNO',
+        dataIndex: 'demandNo',
+        key: 'demandNo',
       },{
         align: 'center',
         title: '需求类型',
@@ -37,8 +37,8 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
       },{
         align: 'center',
         title: '项目编号',
-        dataIndex: 'projectNO',
-        key: 'projectNO',
+        dataIndex: 'projectNo',
+        key: 'projectNo',
       },{
         align: 'center',
         title: '项目名称',
@@ -118,10 +118,10 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
           payload: {
             demandName: getFieldValue("demandName"),
             demandType: getFieldValue("demandType"),
-            demandNO: getFieldValue("demandNO"),
+            demandNo: getFieldValue("demandNo"),
             demandDes: getFieldValue("demandDes"),
-            projectID: pID,       
-            accID: getFieldValue("accName"),
+            projectId: pId,       
+            accId: getFieldValue("accName"),
           }
         })
       }
@@ -150,7 +150,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
               dispatch({
                 type:"demand/updateState",
                 payload:{
-                  pID:items.id
+                  pId:items.id
                 }
               })
             }
@@ -200,7 +200,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                         )}
                         </FormItem>
                         <FormItem label="需求编号" {...formItemLayout}>
-                        {getFieldDecorator("demandNO", {
+                        {getFieldDecorator("demandNo", {
                           initialValue:"D",
                           rules: [
                             { 

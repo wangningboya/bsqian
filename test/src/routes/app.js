@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Route,withRouter } from 'dva/router'
+import { Route,withRouter, Link } from 'dva/router'
 import {MyLayout} from '../components'
 
 import { Layout } from 'antd';
@@ -35,7 +35,7 @@ const App =({children, location, dispatch, app}) => {
                 </Header>
                 <Layout>
                     <Sider {...siderProps}></Sider>
-                    <Content>
+                    <Content style={{height:500}}>
                         {children}
                         {/* <Route path="/demand" exact component={Demand} /> */}
                     </Content>

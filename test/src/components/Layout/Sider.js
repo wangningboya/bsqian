@@ -10,7 +10,7 @@ const SubMenu = Menu.SubMenu;
 const Sider =({menu}) => {
     
     //数组格式转树状结构
-    const arrayToTree = (array, id = 'id', parentID = 'parentID', children = 'children') => {
+    const arrayToTree = (array, id = 'id', parentId = 'parentId', children = 'children') => {
         let data = lodash.cloneDeep(array)
         let result = []
         let hash = {}
@@ -18,7 +18,7 @@ const Sider =({menu}) => {
         hash[data[index][id]] = data[index]
         })
         data.forEach((item) => {
-        let hash2 = hash[item[parentID]]
+        let hash2 = hash[item[parentId]]
         if (hash2) {
             !hash2[children] && (hash2[children] = [])
             hash2[children].push(item)
@@ -28,7 +28,7 @@ const Sider =({menu}) => {
         })
         return result
     }
-    const menuTree=arrayToTree(menu.filter(a => a.parentID !== '-1'), 'id', 'parentID')
+    const menuTree=arrayToTree(menu.filter(a => a.parentId !== '-1'), 'id', 'parentId')
     console.log(menu)
     console.log(menuTree)
     // 递归生成菜单

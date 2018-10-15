@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Layout } from 'antd'
+import styles from './Content.less'
 
 
 class Content extends Component {
