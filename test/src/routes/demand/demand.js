@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Page } from '../../components'
-import { Table, Form, Button, Modal, Input, Select } from 'antd'
+import { Table, Form, Button, Modal, Input, Select, Icon, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
+import moment from 'moment'; 
 
 const FormItem = Form.Item
 const Option = Select.Option
 const TextArea = Input.TextArea
+const Search = Input.Search
 
 const Demand = ({demand, loading, dispatch,form}) =>  {
-  const { demandList,modalVisible, modalTitle, projectList, accList, pId, pagination } = demand
+  const { demandList,modalVisible, modalTitle, projectList, accList, pId, dId, pagination, record, usertype } = demand
   const { getFieldDecorator, resetFields, setFieldsValue, getFieldValue } = form
       const columns = [{
         align: 'center',
@@ -29,11 +31,6 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         key: 'demandName',
         // render: (text,record,index)=>{return <a>{(text)}</a>}
         render: (text,record,index)=>{return <Link to={`demand/${record.id}`}>{(text)}</Link>}
-      },{
-        align: 'center',
-        title: '需求说明',
-        dataIndex: 'demandDes',
-        key: 'demandDes',
       },{
         align: 'center',
         title: '项目编号',
@@ -56,14 +53,24 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         dataIndex: 'id',
         key: 'id',
         render: (text,record,index)=>{
-          return <a href="javascript:;" onClick={() => {
-            dispatch({
-              type: "noticeList/getById",
-              payload: {
-                text,
-              }
-            })
-          }}>修改</a>
+          
+          if(record.state == 0||record == 3){
+            return <a href="javascript:;" onClick={() => {
+              add();
+              console.log(record)
+              dispatch({
+                type: "demand/updateState",
+                payload: {
+                  modalVisible: true,
+                  modalTitle:"修改",
+                  usertype:"1",
+                  record,
+                  dId:record.id,
+                  pId:record.projectId,
+                }
+              })
+            }}>修改</a>
+          }
         }
       }];
 
@@ -82,13 +89,51 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         switch(a){
           case 0:
             return "提出需求";
+          case 1:
+            return "审核未通过";
+          case 2:
+            return "预估时间";
+          case 3:
+            return "开发开始";
+          case 4:
+            return "开发暂停";
+          case 5:
+            return "开发结束";
+          case 6:
+            return "开发关闭";
+          case 7:
+            return "验收通过";
+          case 8:
+            return "验收未通过";
           default:
             return "";
         }
       }
 
+      //时间转换
+      const toDate = (a) =>{
+        if(a!=""&&a!=null){
+            return moment(a).format("YYYYMMDD");
+        }
+        return "";
+      }
+      const timeNow = toDate(new Date())
+
+      //新增需求
       const add = () => {
         resetFields()
+        dispatch({
+          type: "demand/updateState",
+          payload: {
+            modalVisible: true,
+            modalTitle: "新增",
+            usertype:"0",
+            record:{
+              demandType: "0",
+              demandNo: "D"+timeNow
+            }
+          }
+        })
         dispatch({
           type: "demand/modalQuery",
           payload: {
@@ -96,6 +141,18 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         })
       }
 
+      //条件查询
+      const query = () => {
+        dispatch({
+          type: "demand/query",
+          payload: {
+            demandName: getFieldValue("demandName2"),
+            state: getFieldValue("state"),
+          }
+        })
+      }
+
+      //点击modal的取消或者ESC
       const close = ()=>{
         dispatch({
           type: "demand/updateState",
@@ -105,15 +162,24 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         })
       }
 
+      //点击modal的提交
       const onOk = () => {
+        let userurl = "";
+        if(usertype == 0){
+          userurl = "demand/addDemand";
+        }
+        if(usertype == 1){
+          userurl = "demand/updateDemand";
+        }
         dispatch({
-          type: "demand/addDemand",
+          type: userurl,
           payload: {
+            id:dId,
             demandName: getFieldValue("demandName"),
             demandType: getFieldValue("demandType"),
             demandNo: getFieldValue("demandNo"),
             demandDes: getFieldValue("demandDes"),
-            projectId: pId,       
+            projectId: pId,
             accId: getFieldValue("accName"),
           }
         })
@@ -134,6 +200,15 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         },
       }
 
+      
+
+    //   const addonBefore = (
+    //     <p>{"D"+toDate(new Date().toString())}</p>
+    //   )
+
+      
+
+      //项目改变获取项目经理名字
       const projectChange = (value) =>{
         projectList.map((items,i) => {
             if(items.projectName === value){
@@ -150,6 +225,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         })
       }
 
+      //分页
       const listChange = (pagination) =>{
         dispatch({
           type: "demand/query",
@@ -157,6 +233,8 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
             pageNum:pagination.current,
             pageSize:pagination.pageSize,
             userName: localStorage.getItem("userName"),
+            demandName: getFieldValue("demandName2"),
+            state: getFieldValue("state"),
           }
         })
       }
@@ -165,7 +243,33 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         return (
                 <Page>
                     <div>
-                      <Button type="primary" onClick={add}>创建需求</Button>
+                      <Row style={{marginTop:15,marginBottom:15}}>
+                        <Col span={4}>
+                          {getFieldDecorator("demandName2", {
+                          })(
+                            <Search  style={{width:200}} onSearch={query}></Search>
+                          )}
+                        </Col>
+                        <Col span={4}>
+                          {getFieldDecorator("state", {
+                          })(
+                            <Select style={{width:200}}>
+                            <Option key="" value= "">全部</Option>
+                            <Option key="0" value= "0">提出需求</Option>
+                            <Option key="1" value= "1">审核未通过</Option>
+                            <Option key="2" value= "2">预估时间</Option>
+                            <Option key="3" value= "3">开发开始</Option>
+                            <Option key="4" value= "4">开发暂停</Option>
+                            <Option key="5" value= "5">开发结束</Option>
+                            <Option key="6" value= "6">开发关闭</Option>
+                            <Option key="7" value= "7">验收通过</Option>
+                            <Option key="8" value= "8">验收未通过</Option>
+                          </Select>
+                          )}
+                        </Col>
+                        <Button type="primary" onClick={query} style={{marginRight:15}}>查询</Button>
+                        <Button onClick={add}>创建需求</Button>
+                      </Row>
                       <Table
                       dataSource={demandList} columns={columns}
                       rowKey={(record) => {return record.id}}
@@ -179,6 +283,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                       <Form>
                       <FormItem label="需求名称" {...formItemLayout}>
                         {getFieldDecorator("demandName", {
+                          initialValue: record.demandName,
                           rules: [
                             { 
                               required: true, 
@@ -191,7 +296,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                         </FormItem>
                         <FormItem label="需求类型" {...formItemLayout}>
                         {getFieldDecorator("demandType", {
-                          initialValue: "0",
+                          initialValue: record.demandType+"",
                           rules: [
                             { 
                               required: true, 
@@ -200,14 +305,14 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                           ]
                         })(
                           <Select>
-                            <Option value="0">需求</Option>
-                            <Option value="1">BUG</Option>
+                            <Option key='0' value='0'>需求</Option>
+                            <Option key='1' value='1'>BUG</Option>
                           </Select>
                         )}
                         </FormItem>
                         <FormItem label="需求编号" {...formItemLayout}>
                         {getFieldDecorator("demandNo", {
-                          initialValue:"D",
+                          initialValue: record.demandNo,
                           rules: [
                             { 
                               required: true, 
@@ -215,11 +320,12 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                             }
                           ]
                         })(
-                          <Input />
+                          <Input/>
                         )}
                         </FormItem>
                         <FormItem label="需求描述" {...formItemLayout}>
                         {getFieldDecorator("demandDes", {
+                          initialValue: record.demandDes,
                           rules: [
                             { 
                               required: true, 
@@ -232,6 +338,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                         </FormItem>
                         <FormItem label="项目名称" {...formItemLayout}>
                         {getFieldDecorator("projectName", {
+                          initialValue: record.projectName,
                           rules: [
                             { 
                               required: true, 
@@ -248,6 +355,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                         </FormItem>
                         <FormItem label="需求评审人员" {...formItemLayout}>
                         {getFieldDecorator("accName", {
+                          initialValue: record.accId,
                           rules: [
                             { 
                               required: true, 
@@ -264,6 +372,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                         </FormItem>
                         <FormItem label="项目经理" {...formItemLayout}>
                         {getFieldDecorator("PMName", {
+                          initialValue: record.pmname,
                         })(
                           <Input disabled={true}/>
                         )}

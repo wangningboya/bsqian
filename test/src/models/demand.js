@@ -1,4 +1,4 @@
-import { demandQuery,projectQuery,accQuery,addDemand } from '../services/demand'
+import { demandQuery,projectQuery,accQuery,addDemand, updateDemand } from '../services/demand'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -12,6 +12,7 @@ export default {
       projectList: [],
       accList: [],
       pId:"",
+      record:{},
     },
 
     subscriptions: {
@@ -34,7 +35,9 @@ export default {
         payload = {},
         }, { select, call, put }) {
           const result = yield call(demandQuery,payload)
+          console.log("result")
           console.log(result)
+          console.log("result")
           if (result && result.success && result.rspCode === '000000') {
             yield put({
               type: 'updateState',
@@ -63,8 +66,6 @@ export default {
               payload: {
                 projectList:projectResult.data.projectList,
                 accList:accResult.data.userList,
-                modalVisible: true,
-                modalTitle: "新增"
                 },
               })
           }else{
@@ -84,10 +85,29 @@ export default {
               })
               yield put({ type: 'query' })
           }else{
-            
+            message.error(result.rspMsg)
+          }
+        },
+
+        * updateDemand ({
+        payload = {},
+        }, { select, call, put }) {
+          const result = yield call(updateDemand,payload)
+          if (result && result.success && result.rspCode === '000000') {
+            yield put({
+              type: 'updateState',
+              payload: {
+                modalVisible: false
+                },
+              })
+              yield put({ type: 'query' })
+          }else{
+            message.error(result.rspMsg)
           }
         },
       },
+
+
       
 
       reducers: {

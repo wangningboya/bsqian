@@ -12,6 +12,7 @@ module.exports = {
     demandQuery2: '/wy/demand/getDemandList',
     projectQuery2:'wy/project/findProject',
     accQuery2: 'wy/user/getUserByRoleId?roleId=zz',
-    addDemand2: 'wy/demand/addDemand'
+    addDemand2: 'wy/demand/addDemand',
+    updateDemand2: 'wy/demand/updateDemand'
   },
 }

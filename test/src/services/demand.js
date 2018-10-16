@@ -1,7 +1,7 @@
 import { api } from '../utils/config'
 import request from '../utils/request'
 
-const { demandQuery2, projectQuery2, accQuery2, addDemand2 } = api
+const { demandQuery2, projectQuery2, accQuery2, addDemand2, updateDemand2 } = api
 
 export async function demandQuery (params) {
     return request({
@@ -30,6 +30,14 @@ export async function accQuery (params) {
 export async function addDemand (params) {
   return request({
     url: addDemand2,
+    method: 'get',
+    data: params,
+  })
+}
+
+export async function updateDemand (params) {
+  return request({
+    url: updateDemand2,
     method: 'get',
     data: params,
   })
