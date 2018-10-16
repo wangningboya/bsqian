@@ -9,7 +9,7 @@ const Option = Select.Option
 const TextArea = Input.TextArea
 
 const Demand = ({demand, loading, dispatch,form}) =>  {
-  const { demandList,modalVisible, modalTitle, projectList, accList, pId } = demand
+  const { demandList,modalVisible, modalTitle, projectList, accList, pId, pagination } = demand
   const { getFieldDecorator, resetFields, setFieldsValue, getFieldValue } = form
       const columns = [{
         align: 'center',
@@ -71,13 +71,10 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         switch(a){
           case 0:
             return "需求";
-            break;
           case 1:
             return "BUG";
-            break;
           default:
             return "";
-            break;
         }
       }
 
@@ -85,20 +82,16 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         switch(a){
           case 0:
             return "提出需求";
-            break;
           default:
             return "";
-            break;
         }
       }
 
       const add = () => {
         resetFields()
         dispatch({
-          type: "demand/updateState",
+          type: "demand/modalQuery",
           payload: {
-            modalVisible: true,
-            modalTitle: "新增"
           }
         })
       }
@@ -157,6 +150,17 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         })
       }
 
+      const listChange = (pagination) =>{
+        dispatch({
+          type: "demand/query",
+          payload: {
+            pageNum:pagination.current,
+            pageSize:pagination.pageSize,
+            userName: localStorage.getItem("userName"),
+          }
+        })
+      }
+
 
         return (
                 <Page>
@@ -167,6 +171,8 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                       rowKey={(record) => {return record.id}}
                       loading={loading.effects['demand/query']} 
                       bordered={true}
+                      pagination={{showTotal:() => `总共 ${pagination.total} 条,共,共${pagination.pages}页`, showSizeChanger: true, showQuickJumper: true, pageSizeOptions:[10,20,50], ...pagination}}
+                      onChange={listChange}
                       />
                     </div>
                     <Modal {...modalProps} okText="提交" onOk={onOk} cancelText="关闭" width={800}>

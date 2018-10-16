@@ -35,9 +35,8 @@ const App =({children, location, dispatch, app}) => {
                 </Header>
                 <Layout>
                     <Sider {...siderProps}></Sider>
-                    <Content style={{height:500}}>
+                    <Content>
                         {children}
-                        {/* <Route path="/demand" exact component={Demand} /> */}
                     </Content>
                 </Layout>
             </Layout>

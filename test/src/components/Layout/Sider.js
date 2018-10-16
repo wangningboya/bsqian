@@ -72,4 +72,4 @@ const Sider =({menu}) => {
         )
 }
 
-export default connect()(Sider)
+export default Sider

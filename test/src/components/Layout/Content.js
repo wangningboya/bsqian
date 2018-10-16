@@ -15,4 +15,4 @@ class Content extends Component {
     }
 }
 
-export default connect()(Content)
+export default Content

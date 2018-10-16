@@ -34,4 +34,4 @@ const Header = ({user, logout}) =>  {
         )
 }
 
-export default connect()(Header)
+export default Header
