@@ -16,7 +16,7 @@ export default {
             history.listen((location) => {
                 if (location.pathname !== '/login') {
                   const payload = {
-                      userName: localStorage.getItem("userName")
+                      userName: sessionStorage.getItem("userName")
                     }
                   dispatch({
                     type: 'query',
@@ -29,7 +29,7 @@ export default {
       effects: {
         * query ({
         payload = {
-          userName: localStorage.getItem("userName")
+          userName: sessionStorage.getItem("userName")
         },
         }, { select, call, put }) {
           if(payload.userName===null||payload.userName===undefined||payload.userName===""){
@@ -55,7 +55,7 @@ export default {
           const data = yield call(logout, payload)
           if (data.success) {
             message.success(data.rspMsg)
-            localStorage.clear();
+            sessionStorage.clear();
             yield put(routerRedux.push('/login'));
           }
         },

@@ -30,7 +30,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         dataIndex: 'demandName',
         key: 'demandName',
         // render: (text,record,index)=>{return <a>{(text)}</a>}
-        render: (text,record,index)=>{return <Link to={`demand/${record.id}`}>{(text)}</Link>}
+        render: (text,record,index) => {return <Link to={`demand/${record.id}`}>{(text)}</Link>}
       },{
         align: 'center',
         title: '项目编号',
@@ -46,18 +46,17 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         title: '状态',
         dataIndex: 'state',
         key: 'state',
-        render: (text,record,index)=>{return <span>{toState(text)}</span>}
+        render: (text,record,index) => {return <span>{toState(text)}</span>}
       },{
         align: 'center',
         title: '操作',
         dataIndex: 'id',
         key: 'id',
-        render: (text,record,index)=>{
+        render: (text,record,index) => {
           
           if(record.state == 0||record == 3){
             return <a href="javascript:;" onClick={() => {
               add();
-              console.log(record)
               dispatch({
                 type: "demand/updateState",
                 payload: {
@@ -146,6 +145,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
         dispatch({
           type: "demand/query",
           payload: {
+            userName: sessionStorage.getItem("userName"),
             demandName: getFieldValue("demandName2"),
             state: getFieldValue("state"),
           }
@@ -232,7 +232,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
           payload: {
             pageNum:pagination.current,
             pageSize:pagination.pageSize,
-            userName: localStorage.getItem("userName"),
+            userName: sessionStorage.getItem("userName"),
             demandName: getFieldValue("demandName2"),
             state: getFieldValue("state"),
           }
@@ -275,7 +275,7 @@ const Demand = ({demand, loading, dispatch,form}) =>  {
                       rowKey={(record) => {return record.id}}
                       loading={loading.effects['demand/query']} 
                       bordered={true}
-                      pagination={{showTotal:() => `总共 ${pagination.total} 条,共,共${pagination.pages}页`, showSizeChanger: true, showQuickJumper: true, pageSizeOptions:[10,20,50], ...pagination}}
+                      pagination={{showTotal:() => `总共 ${pagination.total} 条,共,共${pagination.pages}页`, showSizeChanger: true, showQuickJumper: true, pageSizeOptions:["10","20","50"], ...pagination}}
                       onChange={listChange}
                       />
                     </div>

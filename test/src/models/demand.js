@@ -20,7 +20,7 @@ export default {
             history.listen((location) => {
                 if (location.pathname === '/demand') {
                   const payload = {
-                      userName: localStorage.getItem("userName"),
+                      userName: sessionStorage.getItem("userName"),
                     }
                   dispatch({
                     type: 'query',
@@ -35,9 +35,6 @@ export default {
         payload = {},
         }, { select, call, put }) {
           const result = yield call(demandQuery,payload)
-          console.log("result")
-          console.log(result)
-          console.log("result")
           if (result && result.success && result.rspCode === '000000') {
             yield put({
               type: 'updateState',
@@ -83,7 +80,12 @@ export default {
                 modalVisible: false
                 },
               })
-              yield put({ type: 'query' })
+              yield put({ 
+                type: 'query' ,
+                payload: {
+                  userName: sessionStorage.getItem("userName"),
+                }
+              })
           }else{
             message.error(result.rspMsg)
           }
@@ -100,7 +102,12 @@ export default {
                 modalVisible: false
                 },
               })
-              yield put({ type: 'query' })
+              yield put({ 
+                type: 'query' ,
+                payload: {
+                  userName: sessionStorage.getItem("userName"),
+                }
+              })
           }else{
             message.error(result.rspMsg)
           }

@@ -24,6 +24,10 @@ const routes = [
     path: '/demand',
     models: () => [import('./models/demand')],
     component: () => import('./routes/demand/demand'),
+  },{
+    path: '/demand/:id',
+    models: () => [import('./models/demandprofile')],
+    component: () => import('./routes/demand/demandprofile'),
   },
   
 ]

@@ -29,8 +29,8 @@ const Sider =({menu}) => {
         return result
     }
     const menuTree=arrayToTree(menu.filter(a => a.parentId !== '-1'), 'id', 'parentId')
-    console.log(menu)
-    console.log(menuTree)
+    // console.log(menu)
+    // console.log(menuTree)
     // 递归生成菜单
     const getMenu = (menuTree2) => {
         return menuTree2.map((item) => {

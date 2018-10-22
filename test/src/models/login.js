@@ -23,7 +23,7 @@ export default {
         if (result && result.success && result.rspCode === '000000') {
           message.success(result.rspMsg)
           const { data } = result
-          localStorage.setItem('userName', data.userName)
+          sessionStorage.setItem('userName', data.userName)
           yield put({
           type: 'updateState',
           payload: {
