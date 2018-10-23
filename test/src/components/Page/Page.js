@@ -8,7 +8,9 @@ export default class Page extends Component {
 
     return (
       <div className={styles.background}>
-        {children}
+        {/* <div className={styles.inner}> */}
+          {children}
+        {/* </div> */}
       </div>
     )
   }

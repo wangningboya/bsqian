@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import {Form, Input, Row, Button} from 'antd'
+import styles from './index.less'
 
 const FormItem = Form.Item
 
@@ -20,7 +21,7 @@ const Login =({login, dispatch, form}) => {
         })
       }
         return (
-                <div>
+                <div className={styles.Form}>
                     <Form>
                         <FormItem hasFeedback>
                             {getFieldDecorator('userName', {
