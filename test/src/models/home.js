@@ -32,13 +32,14 @@ export default {
           const userResult = yield call(userQuery, payload)
           const demandResult = yield call(myTask, payload)
           const demandResult2 = yield call(myCreate, payload)
+
           if (userResult && userResult.success && userResult.rspCode === '000000') {
             yield put({
             type: 'updateState',
             payload: {
                 user:userResult.data.user,
-                demandList:demandResult.data.demandList,
-                demandList2:demandResult2.data.demandList
+                demandList:demandResult.data.list,
+                demandList2:demandResult2.data.list
               },
             })
           } else {

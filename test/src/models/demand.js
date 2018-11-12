@@ -39,12 +39,12 @@ export default {
             yield put({
               type: 'updateState',
               payload: {
-                demandList:result.data.demandList,
+                demandList:result.data.list,
                 pagination: {
-                  current: Number(result.data.demandListPage.pageNum) || 1,
-                  pageSize: Number(result.data.demandListPage.pageSize) || 10,
-                  pages: result.data.demandListPage.pages,
-                  total: result.data.demandListPage.total,
+                  current: Number(result.data.pageNum) || 1,
+                  pageSize: Number(result.data.pageSize) || 10,
+                  pages: result.data.pages,
+                  total: result.data.total,
                 },
                 },
               })
