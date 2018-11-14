@@ -16,6 +16,9 @@ module.exports = {
     addDemand2: 'wy/demand/addDemand',
     updateDemand2: 'wy/demand/updateDemand',
     getDemandListByDevId: 'wy/demand/getDemandListByDevId',
-    getDemandListByCreactName: 'wy/demand/getDemandListByCreactName'
+    getDemandListByCreactName: 'wy/demand/getDemandListByCreactName',
+    getDemandLog:'wy/demand/getDemandLogById',
+    addDemandLog:'wy/demand/addDemandLog',
+    getUsers:'wy/user/getUsers'
   },
 }

@@ -55,7 +55,7 @@ const Demand = ({ demand, loading, dispatch, form }) => {
     key: 'id',
     render: (text, record, index) => {
 
-      if (record.state == 0 || record == 3) {
+      if (record.state === 0 || record === 3) {
         return <a href="javascript:;" onClick={() => {
           add();
           dispatch({
@@ -112,7 +112,7 @@ const Demand = ({ demand, loading, dispatch, form }) => {
 
   //时间转换
   const toDate = (a) => {
-    if (a != "" && a != null) {
+    if (a !== "" && a !== null) {
       return moment(a).format("YYYYMMDD");
     }
     return "";
@@ -166,10 +166,10 @@ const Demand = ({ demand, loading, dispatch, form }) => {
   //点击modal的提交
   const onOk = () => {
     let userurl = "";
-    if (usertype == 0) {
+    if (usertype === "0") {
       userurl = "demand/addDemand";
     }
-    if (usertype == 1) {
+    if (usertype === "1") {
       userurl = "demand/updateDemand";
     }
     dispatch({
