@@ -1,4 +1,4 @@
-import { getDemandById, getDemandLogById, reviewDemand, predictDemand, getDev } from '../services/demand'
+import { getDemandById, getDemandLogById, reviewDemand, predictDemand, getDev, startDev, pauseDev, endDev} from '../services/demand'
 import { } from 'antd'
 import { routerRedux } from 'dva/router'
 import pathToRegexp from 'path-to-regexp'
@@ -71,12 +71,32 @@ export default {
             } else {
             }
         },
-
+        
         * startDev({ payload }, { select, call, put }) {
-            const id2 = yield select(({ demandprofile }) => demandprofile.demand.id)
-            // const result = yield call(predictDemand, payload)
-            console.log(id2)
-            console.log(payload)
+            const id = yield select(({ demandprofile }) => demandprofile.demand.id)
+            const result = yield call(startDev, payload)
+            if (result && result.success && result.rspCode === '000000') {
+                yield put({ type: 'query', payload: { id: id } })
+            } else {
+            }
+        },
+
+        * pauseDev({ payload }, { select, call, put }) {
+            const id = yield select(({ demandprofile }) => demandprofile.demand.id)
+            const result = yield call(pauseDev, payload)
+            if (result && result.success && result.rspCode === '000000') {
+                yield put({ type: 'query', payload: { id: id } })
+            } else {
+            }
+        },
+
+        * endDev({ payload }, { select, call, put }) {
+            const id = yield select(({ demandprofile }) => demandprofile.demand.id)
+            const result = yield call(endDev, payload)
+            if (result && result.success && result.rspCode === '000000') {
+                yield put({ type: 'query', payload: { id: id } })
+            } else {
+            }
         },
 
     },

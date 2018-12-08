@@ -27,6 +27,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
         })
     }
 
+    //开始开发
     const onStartDev = () => {
         confirm({
             title: '确定激活本需求并开始开发吗?',
@@ -34,6 +35,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                 dispatch({
                     type: 'demandprofile/startDev',
                     payload: {
+                        state:4,
                         id: demand.id
                     }
                 })
@@ -44,6 +46,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
         });
     }
 
+    //暂停开发
     const onPauseDev = () => {
         confirm({
             title: '确定暂停本需求开发吗?',
@@ -51,7 +54,8 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
               dispatch({
                 type: 'demandprofile/pauseDev',
                 payload: {
-                  id: demand.id
+                    state:5,
+                    id: demand.id
                 }
               })
             },
@@ -61,6 +65,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
           });
     }
 
+    //开发结束
     const onEndDev = () => {
         confirm({
             title: '确定结束本需求开发吗?',
@@ -68,7 +73,8 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
               dispatch({
                 type: 'demandprofile/endDev',
                 payload: {
-                  id: demand.id
+                    state:6,
+                    id: demand.id
                 }
               })
             },
@@ -122,13 +128,13 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
         title: '需求评审',
         okText: '通过',
         cancelText: '取消',
-        onOk() {
+        onOk(data) {
             dispatch({
                 type: 'demandprofile/reviewDemand',
                 payload: {
                     id: demand.id,
                     state: 1,
-                    reviewdes: getFieldValue("reviewdes"),
+                    reviewDes: getFieldValue("reviewDes"),
                 },
             })
         },
@@ -184,10 +190,10 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                     <Row>
                         <Col span={24} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <Button type="ghost" onClick={onReview} disabled={demand.state === 0 ? false : true} > 需求评审</Button>
-                            <Button type="ghost" onClick={onPredict} disabled={demand.state === 0 ? false : true} > 工时预估</Button>
+                            <Button type="ghost" onClick={onPredict} disabled={demand.state === 1 ? false : true} > 工时预估</Button>
                             <Button type="ghost" onClick={onStartDev} disabled={demand.state === 3 || demand.state === 5 ? false : true} > 激活开发</Button>
                             <Button type="ghost" onClick={onPauseDev} disabled={demand.state === 4 ? false : true} > 暂停开发</Button>
-                            <Button type="ghost" onClick={onEndDev} disabled={demand.state === 10 ? false : true} > 开发结束</Button>
+                            <Button type="ghost" onClick={onEndDev} disabled={demand.state === 4 && demand.state !== 6 ? false : true} > 开发结束</Button>
                             <Button type="ghost" disabled={demand.state === 10 ? false : true} > 验收通过</Button>
                             <Button type="ghost" disabled={demand.state === 10 ? false : true} > 验收未通过</Button>
                         </Col>
