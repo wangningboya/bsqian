@@ -61,18 +61,16 @@ export async function getDemandLogById(params) {
 }
 
 export async function reviewDemand(params) {
-  console.log(demand.concat('/review'))
-  console.log(params)
   return request({
     url: demand.concat('/review'),
-    method: 'post',
+    method: 'get',
     data: params,
   })
 }
 
 export async function predictDemand(params) {
   return request({
-    url: addDemandLog,
+    url: demand.concat('/predict'),
     method: 'get',
     data: params,
   })
@@ -80,7 +78,7 @@ export async function predictDemand(params) {
 
 export async function startDev(params) {
   return request({
-    url: addDemandLog,
+    url: demand.concat('/startDev'),
     method: 'get',
     data: params,
   })
@@ -88,7 +86,7 @@ export async function startDev(params) {
 
 export async function pauseDev(params) {
   return request({
-    url: addDemandLog,
+    url: demand.concat('/pauseDev'),
     method: 'get',
     data: params,
   })
@@ -96,7 +94,7 @@ export async function pauseDev(params) {
 
 export async function endDev(params) {
   return request({
-    url: addDemandLog,
+    url: demand.concat('/endDev'),
     method: 'get',
     data: params,
   })

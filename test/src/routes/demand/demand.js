@@ -258,14 +258,15 @@ const Demand = ({ demand, loading, dispatch, form }) => {
                 <Select style={{ width: 200 }}>
                   <Option key="" value="">全部</Option>
                   <Option key="0" value="0">提出需求</Option>
-                  <Option key="1" value="1">审核未通过</Option>
-                  <Option key="2" value="2">预估时间</Option>
-                  <Option key="3" value="3">开发开始</Option>
-                  <Option key="4" value="4">开发暂停</Option>
-                  <Option key="5" value="5">开发结束</Option>
-                  <Option key="6" value="6">开发关闭</Option>
-                  <Option key="7" value="7">验收通过</Option>
-                  <Option key="8" value="8">验收未通过</Option>
+                  <Option key="1" value="1">审核通过</Option>
+                  <Option key="2" value="2">审核未通过</Option>
+                  <Option key="3" value="3">预估时间</Option>
+                  <Option key="4" value="4">开发开始</Option>
+                  <Option key="5" value="5">开发暂停</Option>
+                  <Option key="6" value="6">开发结束</Option>
+                  <Option key="7" value="7">开发关闭</Option>
+                  <Option key="8" value="8">验收通过</Option>
+                  <Option key="9" value="9">验收未通过</Option>
                 </Select>
               )}
             </Col>

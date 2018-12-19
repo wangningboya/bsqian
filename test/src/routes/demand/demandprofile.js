@@ -35,7 +35,6 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                 dispatch({
                     type: 'demandprofile/startDev',
                     payload: {
-                        state:4,
                         id: demand.id
                     }
                 })
@@ -54,7 +53,6 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
               dispatch({
                 type: 'demandprofile/pauseDev',
                 payload: {
-                    state:5,
                     id: demand.id
                 }
               })
@@ -150,7 +148,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
             type: 'demandprofile/reviewDemand',
             payload: {
                 id: demand.id,
-                state: 2,
+                state: 0,
                 reviewDes: getFieldValue("reviewDes"),
             },
         })
@@ -169,7 +167,6 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                 type: 'demandprofile/predictDemand',
                 payload: {
                     id: demand.id,
-                    state: 3,
                     expTime: getFieldValue("expTime"),
                     devId: getFieldValue("devId"),
                 },
@@ -219,7 +216,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                     </Card>
 
                     <Timeline style={{ marginTop: 20 }}>
-                        {demandLogList.map(item => { return <Timeline.Item key={item.id}>{changeState(item.demandState)}{`-${item.opeName}-${moment(item.opeTime).format('YYYY-MM-DD HH:mm:ss')}`}</Timeline.Item> })}
+                        {demandLogList.map(item => { return <Timeline.Item key={item.id}>{item.demandStateName}{`-${item.opeName}-${moment(item.opeTime).format('YYYY-MM-DD HH:mm:ss')}`}</Timeline.Item> })}
                     </Timeline>
 
                     {reviewModalVisible && <Modal {...reviewModalProps} >

@@ -17,16 +17,16 @@ export default {
 
     subscriptions: {
         setup ({ dispatch, history }) {
-            history.listen((location) => {
-                if (location.pathname === '/demand') {
-                  const payload = {
-                      userName: sessionStorage.getItem("userName"),
-                    }
-                  dispatch({
-                    type: 'query',
-                    payload })
-                }
-              })
+          history.listen((location) => {
+              if (location.pathname === '/demand') {
+                const payload = {
+                    userName: sessionStorage.getItem("userName"),
+                  }
+                dispatch({
+                  type: 'query',
+                  payload })
+              }
+            })
         },
       },
 

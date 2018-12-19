@@ -28,6 +28,10 @@ const routes = [
     path: '/demand/:id',
     models: () => [import('./models/demandprofile')],
     component: () => import('./routes/demand/demandprofile'),
+  },{
+    path: '/issue',
+    models: () => [import('./models/issue')],
+    component: () => import('./routes/issue/issue'),
   },
   
 ]
