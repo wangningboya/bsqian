@@ -1,64 +1,88 @@
-import { issueQuery } from '../services/issue'
+import { issueQuery, addIssue } from '../services/issue'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
 export default {
 
-    namespace:"issue",
+  namespace: "issue",
 
-    state:{
-      issueList:[],
-      modalVisible: false,
-      record:{},
-      toState: {
-        '0':'未处理',
-        '1':'已创建需求',
-        '2':'关闭'
+  state: {
+    issueList: [],
+    modalVisible: false,
+    record: {},
+    permissions: [],
+    toState: {
+      '0': '未处理',
+      '1': '已创建需求',
+      '2': '关闭'
+    }
+  },
+
+  subscriptions: {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
+        if (location.pathname === '/issue') {
+          const payload = {
+            userName: sessionStorage.getItem("userName"),
+          }
+          dispatch({
+            type: 'query',
+            payload
+          })
+        }
+      })
+    },
+  },
+
+  effects: {
+    * query({
+      payload = {},
+    }, { select, call, put }) {
+      const result = yield call(issueQuery, payload)
+      if (result && result.success && result.rspCode === '000000') {
+        yield put({
+          type: 'updateState',
+          payload: {
+            issueList: result.data.issuePageInfo.list,
+            permissions: result.data.user.permissions,
+            pagination: {
+              current: Number(result.data.issuePageInfo.pageNum) || 1,
+              pageSize: Number(result.data.issuePageInfo.pageSize) || 10,
+              pages: result.data.issuePageInfo.pages,
+              total: result.data.issuePageInfo.total,
+            },
+          },
+        })
+      } else {
+        message.error(result.rspMsg)
       }
     },
+    * addIssue({
+      payload = {},
+    }, { select, call, put }) {
+      const result = yield call(addIssue, payload)
+      if (result && result.success && result.rspCode === '000000') {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalVisible: false
+          },
+        })
+        yield put({
+          type: 'query',
+          payload: {
 
-    subscriptions: {
-        setup ({ dispatch, history }) {
-            history.listen((location) => {
-                if (location.pathname === '/issue') {
-                  const payload = {
-                      userName: sessionStorage.getItem("userName"),
-                    }
-                  dispatch({
-                    type: 'query',
-                    payload })
-                }
-              })
-        },
-      },
-
-      effects: {
-        * query ({
-        payload = {},
-        }, { select, call, put }) {
-          const result = yield call(issueQuery,payload)
-          if (result && result.success && result.rspCode === '000000') {
-            yield put({
-              type: 'updateState',
-              payload: {
-                issueList:result.data.list,
-                pagination: {
-                  current: Number(result.data.pageNum) || 1,
-                  pageSize: Number(result.data.pageSize) || 10,
-                  pages: result.data.pages,
-                  total: result.data.total,
-                },
-                },
-              })
-          }else{
-            message.error(result.rspMsg)
           }
-        },
+        })
+      } else {
+        message.error(result.rspMsg)
+      }
+    },
 
   },
 
   reducers: {
-    updateState (state, { payload }) {
+    updateState(state, { payload }) {
       return {
         ...state,
         ...payload,

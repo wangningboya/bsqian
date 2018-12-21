@@ -5,15 +5,18 @@ import { Table, Form, Button, Modal, Input, Select, Icon, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import moment from 'moment';
 import styles from './index.less'
+import { config } from 'utils'
 
 const FormItem = Form.Item
 const Option = Select.Option
 const TextArea = Input.TextArea
 const Search = Input.Search
+const confirm = Modal.confirm
+const {ISSUE_CLOSED , ISSUE_EDIT, ISSUE_DELETE} = config
 
 const Issue = ({ loading, dispatch, form, issue }) => {
   const { getFieldDecorator, getFieldValue, resetFields } = form
-  const { issueList, pagination, modalVisible, modalTitle, issueType, record, toState } = issue
+  const { issueList, pagination, modalVisible, modalTitle, issueType, record, toState, permissions } = issue
 
   let menuOptions = []
   if(permissions.includes(ISSUE_EDIT)){
@@ -25,7 +28,36 @@ const Issue = ({ loading, dispatch, form, issue }) => {
   if(permissions.includes(ISSUE_DELETE)){
     menuOptions.push( { key: '3', name: '删除' })
   }
-  
+
+
+  const handleMenuClick = (record, e) => {
+    if (e.key === '1') {
+      onEditItem(record)
+    } else if (e.key === '3') {
+      confirm({
+        title: '是否删除此问题?',
+        onOk() {
+          onDeleteItem(record.id)
+        },
+      })
+    } else if (e.key === '2') {
+      onCloseItem(record)
+    }
+  }
+
+  const onEditItem = (record) => {
+    console.log(record)
+  }
+
+  const onDeleteItem = (id) => {
+    console.log(id)
+  }
+
+  const onCloseItem = (id) => {
+    console.log(id)
+  }
+
+
   const columns = [{
     align: 'center',
     title: '问题编号',
@@ -42,12 +74,13 @@ const Issue = ({ loading, dispatch, form, issue }) => {
     title: '问题状态',
     dataIndex: 'state',
     key: 'state',
-    render: (text, record, index) => { return <span>{toState[text+""]}</span> }
+    render: (text, record, index) => { return <span>{toState[text + ""]}</span> }
   }, {
     align: 'center',
     title: '操作',
     dataIndex: 'id',
     key: 'id',
+    width: 100,
     render: (text, record, index) => {
       return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />
     }
@@ -70,7 +103,7 @@ const Issue = ({ loading, dispatch, form, issue }) => {
       payload: {
         modalVisible: true,
         modalTitle: "新增",
-        usertype: "0",
+        issueType: "0",
         record: {
           issueType: "0",
           issueNo: "I" + timeNow
@@ -78,7 +111,7 @@ const Issue = ({ loading, dispatch, form, issue }) => {
       }
     })
     dispatch({
-      type: "demand/modalQuery",
+      type: "issue/modalQuery",
       payload: {
       }
     })
@@ -98,12 +131,12 @@ const Issue = ({ loading, dispatch, form, issue }) => {
   //分页
   const listChange = (pagination) => {
     dispatch({
-      type: "demand/query",
+      type: "issue/query",
       payload: {
         pageNum: pagination.current,
         pageSize: pagination.pageSize,
         userName: sessionStorage.getItem("userName"),
-        demandName: getFieldValue("demandName2"),
+        issueName: getFieldValue("issueName2"),
         state: getFieldValue("state"),
       }
     })
@@ -122,19 +155,17 @@ const Issue = ({ loading, dispatch, form, issue }) => {
   const onOk = () => {
     let userurl = "";
     if (issueType === "0") {
-      userurl = "demand/addDemand";
+      userurl = "issue/addIssue";
     }
     if (issueType === "1") {
-      userurl = "demand/updateDemand";
+      userurl = "issue/updateIssue";
     }
     dispatch({
       type: userurl,
       payload: {
-        // id: dId,
-        demandName: getFieldValue("demandName"),
-        demandNo: getFieldValue("demandNo"),
-        demandDes: getFieldValue("demandDes"),
-        // projectId: pId,
+        issueName: getFieldValue("issueName"),
+        issueNo: getFieldValue("issueNo"),
+        issueContent: getFieldValue("issueContent"),
       }
     })
   }
@@ -157,8 +188,8 @@ const Issue = ({ loading, dispatch, form, issue }) => {
 
   return (
     <Page>
-      <div className={styles.demandBack}>
-        <div className={styles.demandList}>
+      <div className={styles.issueBack}>
+        <div className={styles.issueList}>
           <Row style={{ paddingTop: 30, marginBottom: 15 }}>
             <Col span={4}>
               {getFieldDecorator("issueName2", {
@@ -220,8 +251,8 @@ const Issue = ({ loading, dispatch, form, issue }) => {
             )}
           </FormItem>
           <FormItem label="问题描述" {...formItemLayout}>
-            {getFieldDecorator("issueDes", {
-              initialValue: record.issueDes,
+            {getFieldDecorator("issueContent", {
+              initialValue: record.issueContent,
               rules: [
                 {
                   required: true,
