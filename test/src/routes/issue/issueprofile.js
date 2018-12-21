@@ -73,7 +73,7 @@ const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
                         bodyStyle={{ padding: '8px 32px 32px 32px' }}
                     >
 
-                        <List
+                        <List 
                             itemLayout="horizontal"
                             dataSource={issue.demands === null ? [] : issue.demands}
                             renderItem={item => (
