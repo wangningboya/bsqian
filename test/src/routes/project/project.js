@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Page, DropOption } from '../../components'
-import { Table, Form, Button, Modal, Input, Select, Icon, Row, Col, DatePicker, InputNumber  } from 'antd'
+import { Table, Form, Button, Modal, Input, Select, Icon, Row, Col, DatePicker, InputNumber } from 'antd'
 import { Link } from 'react-router-dom'
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -20,7 +20,7 @@ moment.locale('zh-cn');
 
 const Project = ({ loading, dispatch, form, project }) => {
     const { getFieldDecorator, getFieldValue, resetFields, getFieldsValue } = form
-    const { projectList, pagination, modalVisible, modalTitle, issueType, record, toState, permissions, startTime, endTime } = project
+    const { projectList, pagination, modalVisible, modalTitle, projectType, record, toState, permissions, startTime, endTime } = project
 
     let menuOptions = []
     if (permissions.includes(PROJECT_EDIT)) {
@@ -164,7 +164,7 @@ const Project = ({ loading, dispatch, form, project }) => {
         let fields = getFieldsValue();
         fields = handleFields(fields)
         fields.pageNum = pagination.current,
-        fields.pageSize = pagination.pageSize,
+            fields.pageSize = pagination.pageSize,
             dispatch({
                 type: "project/query",
                 payload: fields
@@ -182,19 +182,24 @@ const Project = ({ loading, dispatch, form, project }) => {
 
     //点击modal的提交
     const onOk = () => {
-        let userurl = "";
-        if (issueType === "0") {
-            userurl = "project/addIssue";
+        let projectUrl = "";
+        if (projectType === "0") {
+            projectUrl = "project/addProject";
         }
-        if (issueType === "1") {
-            userurl = "project/updateIssue";
+        if (projectType === "1") {
+            projectUrl = "project/updateProject";
         }
+        alert(projectUrl)
         dispatch({
-            type: userurl,
+            type: projectUrl,
             payload: {
-                issueName: getFieldValue("issueName"),
-                issueNo: getFieldValue("issueNo"),
-                issueContent: getFieldValue("issueContent"),
+                projectName: getFieldValue("projectName"),
+                state: getFieldValue("state"),
+                setUpDate: moment(getFieldValue("setUpDate")).format('YYYY-MM-DD HH:mm:ss'),
+                projectNo: getFieldValue("projectNo"),
+                projectSales: getFieldValue("projectSales"),
+                projectAmount: getFieldValue("projectAmount"),
+                projectDes: getFieldValue("projectDes"),
             }
         })
     }
@@ -221,13 +226,13 @@ const Project = ({ loading, dispatch, form, project }) => {
                 <div className={styles.projecList}>
                     <Row style={{ paddingTop: 30, marginBottom: 15 }}>
                         <Col span={4}>
-                            {getFieldDecorator("projectName", {
+                            {getFieldDecorator("projectName2", {
                             })(
                                 <Search style={{ width: 200 }} onSearch={query} placeholder="项目名称"></Search>
                             )}
                         </Col>
                         <Col span={4}>
-                            {getFieldDecorator("state", {
+                            {getFieldDecorator("state2", {
                             })(
                                 <Select style={{ width: 200 }}>
                                     <Option key="" value="">全部</Option>
@@ -240,7 +245,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                             )}
                         </Col>
                         <Col span={6} >
-                            {getFieldDecorator('setupTime', {
+                            {getFieldDecorator('setUpDate2', {
                                 // initialValue: initialCreateTime
                             })(
                                 <RangePicker style={{ width: '100%' }} placeholder={["开始时间", "结束时间"]} format="YYYY-MM-DD" onChange={handleChange.bind(null, 'setupTime')} />
@@ -262,8 +267,8 @@ const Project = ({ loading, dispatch, form, project }) => {
             <Modal {...modalProps} okText="提交" onOk={onOk} cancelText="关闭" width={500}>
                 <Form>
                     <FormItem label="项目名称" {...formItemLayout}>
-                        {getFieldDecorator("issueName", {
-                            initialValue: record.issueName,
+                        {getFieldDecorator("projectName", {
+                            initialValue: record.projectName,
                             rules: [
                                 {
                                     required: true,
@@ -276,7 +281,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                     </FormItem>
                     <FormItem label="项目编号" {...formItemLayout}>
                         {getFieldDecorator("projectNo", {
-                            initialValue: record.issueNo,
+                            initialValue: record.projectNo,
                             rules: [
                                 {
                                     required: true,
@@ -289,7 +294,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                     </FormItem>
                     <FormItem label="销售人员" {...formItemLayout}>
                         {getFieldDecorator("projectSales", {
-                            // initialValue: record.issueContent,
+                            initialValue: record.projectSales,
                             rules: [
                                 {
                                     required: true,
@@ -302,7 +307,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                     </FormItem>
                     <FormItem label="项目预算" {...formItemLayout}>
                         {getFieldDecorator("projectAmount", {
-                            // initialValue: record.issueContent,
+                            initialValue: record.projectAmount,
                             rules: [
                                 {
                                     required: true,
@@ -310,12 +315,12 @@ const Project = ({ loading, dispatch, form, project }) => {
                                 }
                             ]
                         })(
-                            <InputNumber />
+                            <InputNumber style={{ width: 200 }} />
                         )}
                     </FormItem>
                     <FormItem label="立项时间" {...formItemLayout}>
                         {getFieldDecorator("setUpDate", {
-                            // initialValue: record.issueContent,
+                            initialValue: record.setUpDate,
                             rules: [
                                 {
                                     required: true,
@@ -323,12 +328,12 @@ const Project = ({ loading, dispatch, form, project }) => {
                                 }
                             ]
                         })(
-                            <DatePicker />
+                            <DatePicker style={{ width: 200 }} />
                         )}
                     </FormItem>
                     <FormItem label="项目状态" {...formItemLayout}>
                         {getFieldDecorator("state", {
-                            // initialValue: record.issueContent,
+                            initialValue: record.state,
                             rules: [
                                 {
                                     required: true,
@@ -336,12 +341,18 @@ const Project = ({ loading, dispatch, form, project }) => {
                                 }
                             ]
                         })(
-                            <Input />
+                            <Select style={{ width: 200 }}>
+                                <Option key="0" value="0">立项</Option>
+                                <Option key="1" value="1">投标</Option>
+                                <Option key="2" value="2">签约</Option>
+                                <Option key="3" value="3">验收</Option>
+                                <Option key="4" value="4">维护</Option>
+                            </Select>
                         )}
                     </FormItem>
                     <FormItem label="项目描述" {...formItemLayout}>
-                        {getFieldDecorator("issueContent", {
-                            // initialValue: record.issueContent,
+                        {getFieldDecorator("projectDes", {
+                            initialValue: record.projectDes,
                         })(
                             <TextArea autosize={{ minRows: 2, maxRows: 6 }} />
                         )}

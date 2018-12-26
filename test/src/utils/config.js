@@ -32,5 +32,6 @@ module.exports = {
     addIssue2: `wy/issue/addIssue`,
     getIssue: `wy/issue/getIssue`,
     getProject: `wy/project/getProjectList`,
+    saveProject: `wy/project/saveProject`,
   },
 }
