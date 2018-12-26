@@ -36,6 +36,10 @@ const routes = [
     path: '/issue/:id',
     models: () => [import('./models/issueprofile')],
     component: () => import('./routes/issue/issueprofile'),
+  },{
+    path: '/project',
+    models: () => [import('./models/project')],
+    component: () => import('./routes/project/project'),
   },
   
 ]

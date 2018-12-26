@@ -95,7 +95,7 @@ const Issue = ({ loading, dispatch, form, issue }) => {
   }
   const timeNow = toDate(new Date())
 
-  //新增需求
+  //新增问题
   const add = () => {
     resetFields()
     dispatch({

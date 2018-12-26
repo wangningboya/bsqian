@@ -8,6 +8,8 @@ module.exports = {
   ISSUE_EDIT: 'b6d4956054694d3b9db65eda368ebfbd',
   ISSUE_DELETE: '09d6aa3f18154fa89af09c5aa37f9941',
   ISSUE_TRANSFER: '4b486e286d0e4a098e55c51f54cf1204',
+  PROJECT_EDIT: `154b6606a95947a19e803cffe6fbc5f5`,
+  PROJECT_DELETE: `0b373aa290a54aa4bd4d6612e00bb16a`,
 
   api: {
     userLogin2: `/wy/login/login`,
@@ -28,6 +30,7 @@ module.exports = {
     demand: `wy/demand`,
     getIssueList: `wy/issue/getIssueList`,
     addIssue2: `wy/issue/addIssue`,
-    getIssue: `wy/issue/getIssue`
+    getIssue: `wy/issue/getIssue`,
+    getProject: `wy/project/getProjectList`,
   },
 }
