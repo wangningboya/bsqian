@@ -20,7 +20,7 @@ moment.locale('zh-cn');
 
 const Project = ({ loading, dispatch, form, project }) => {
     const { getFieldDecorator, getFieldValue, resetFields, getFieldsValue } = form
-    const { projectList, pagination, modalVisible, modalTitle, projectType, record, toState, permissions, startTime, endTime } = project
+    const { projectList, pagination, modalVisible, modalTitle, projectType, record, toState, permissions, pmList } = project
 
     let menuOptions = []
     if (permissions.includes(PROJECT_EDIT)) {
@@ -49,10 +49,6 @@ const Project = ({ loading, dispatch, form, project }) => {
     }
 
     const onDeleteItem = (id) => {
-        console.log(id)
-    }
-
-    const onCloseItem = (id) => {
         console.log(id)
     }
 
@@ -92,6 +88,7 @@ const Project = ({ loading, dispatch, form, project }) => {
             title: '项目状态',
             dataIndex: 'state',
             key: 'state',
+            render: (text, record, index) => { return <span>{toState2(text)}</span> }
         }, {
             title: '立项时间',
             dataIndex: 'setUpDate',
@@ -106,6 +103,23 @@ const Project = ({ loading, dispatch, form, project }) => {
             },
         },
     ]
+
+    const toState2 = (a) => {
+        switch (a) {
+          case 0:
+            return "立项";
+          case 1:
+            return "投标";
+          case 2:
+            return "签约";
+          case 3:
+            return "验收";
+          case 4:
+            return "维护";
+          default:
+            return "";
+        }
+      }
 
     //时间转换
     const toDate = (a) => {
@@ -129,6 +143,11 @@ const Project = ({ loading, dispatch, form, project }) => {
                     projectType: "0",
                     projectNo: "P" + timeNow
                 }
+            }
+        })
+        dispatch({
+            type: "project/modalQuery",
+            payload: {
             }
         })
     }
@@ -189,7 +208,6 @@ const Project = ({ loading, dispatch, form, project }) => {
         if (projectType === "1") {
             projectUrl = "project/updateProject";
         }
-        alert(projectUrl)
         dispatch({
             type: projectUrl,
             payload: {
@@ -200,6 +218,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                 projectSales: getFieldValue("projectSales"),
                 projectAmount: getFieldValue("projectAmount"),
                 projectDes: getFieldValue("projectDes"),
+                PMId: getFieldValue("pmId"),
             }
         })
     }
@@ -347,6 +366,23 @@ const Project = ({ loading, dispatch, form, project }) => {
                                 <Option key="2" value="2">签约</Option>
                                 <Option key="3" value="3">验收</Option>
                                 <Option key="4" value="4">维护</Option>
+                            </Select>
+                        )}
+                    </FormItem>
+                    <FormItem label="项目经理" {...formItemLayout}>
+                        {getFieldDecorator("pmId", {
+                            initialValue: record.state,
+                            rules: [
+                                {
+                                    required: true,
+                                    message: '不能为空',
+                                }
+                            ]
+                        })(
+                            <Select style={{ width: 200 }}>
+                                {pmList.map((items) => {
+                                    return <Option key={`${items.id}`} value={`${items.userName}`}>{items.realName}</Option>
+                                })}
                             </Select>
                         )}
                     </FormItem>

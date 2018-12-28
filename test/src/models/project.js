@@ -1,4 +1,4 @@
-import { projectQuery, addProject } from '../services/project'
+import { projectQuery, addProject, pmQuery } from '../services/project'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -16,6 +16,7 @@ export default {
             '1': '已创建需求',
             '2': '关闭'
         },
+        pmList:[]
     },
 
     subscriptions: {
@@ -39,7 +40,6 @@ export default {
             payload = {},
         }, { select, call, put }) {
             const result = yield call(projectQuery, payload)
-            console.log(result)
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',
@@ -80,6 +80,23 @@ export default {
                 message.error(result.rspMsg)
             }
         },
+
+        * modalQuery ({
+            payload = {},
+            }, { select, call, put }) {
+              const result = yield call(pmQuery)
+              console.log(result)
+              if (result && result.success && result.rspCode === '000000' ) {
+                yield put({
+                  type: 'updateState',
+                  payload: {
+                    pmList:result.data.userList,
+                    },
+                  })
+              }else{
+                message.error("查询失败")
+              }
+            },
 
     },
 
