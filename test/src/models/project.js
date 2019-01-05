@@ -1,4 +1,4 @@
-import { projectQuery, addProject, pmQuery } from '../services/project'
+import { projectQuery, addProject, pmQuery, deleteProject } from '../services/project'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -16,7 +16,7 @@ export default {
             '1': '已创建需求',
             '2': '关闭'
         },
-        pmList:[]
+        pmList: []
     },
 
     subscriptions: {
@@ -45,7 +45,7 @@ export default {
                     type: 'updateState',
                     payload: {
                         projectList: result.data.projectList.list,
-                        permissions : result.data.user.permissions,
+                        permissions: result.data.user.permissions,
                         pagination: {
                             current: Number(result.data.projectList.pageNum) || 1,
                             pageSize: Number(result.data.projectList.pageSize) || 10,
@@ -81,22 +81,38 @@ export default {
             }
         },
 
-        * modalQuery ({
+        * modalQuery({
             payload = {},
-            }, { select, call, put }) {
-              const result = yield call(pmQuery)
-              console.log(result)
-              if (result && result.success && result.rspCode === '000000' ) {
+        }, { select, call, put }) {
+            const result = yield call(pmQuery)
+            console.log(result)
+            if (result && result.success && result.rspCode === '000000') {
                 yield put({
-                  type: 'updateState',
-                  payload: {
-                    pmList:result.data.userList,
+                    type: 'updateState',
+                    payload: {
+                        pmList: result.data.userList,
                     },
-                  })
-              }else{
+                })
+            } else {
                 message.error("查询失败")
-              }
-            },
+            }
+        },
+
+        * deleteProject({
+            payload = {},
+        }, { select, call, put }) {
+            const result = yield call(deleteProject, payload)
+            if (result && result.success && result.rspCode === '000000') {
+                yield put({
+                    type: 'query',
+                    payload: {
+
+                    }
+                })
+            } else {
+                message.error(result.rspMsg)
+            }
+        },
 
     },
 

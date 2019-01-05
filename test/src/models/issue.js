@@ -1,4 +1,4 @@
-import { issueQuery, addIssue } from '../services/issue'
+import { issueQuery, addIssue, deleteIssue, closeIssue } from '../services/issue'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -57,6 +57,7 @@ export default {
         message.error(result.rspMsg)
       }
     },
+
     * addIssue({
       payload = {},
     }, { select, call, put }) {
@@ -68,6 +69,38 @@ export default {
             modalVisible: false
           },
         })
+        yield put({
+          type: 'query',
+          payload: {
+
+          }
+        })
+      } else {
+        message.error(result.rspMsg)
+      }
+    },
+
+    * deleteIssue({
+      payload = {},
+    }, { select, call, put }) {
+      const result = yield call(deleteIssue, payload)
+      if (result && result.success && result.rspCode === '000000') {
+        yield put({
+          type: 'query',
+          payload: {
+
+          }
+        })
+      } else {
+        message.error(result.rspMsg)
+      }
+    },
+
+    * closeIssue({
+      payload = {},
+    }, { select, call, put }) {
+      const result = yield call(closeIssue, payload)
+      if (result && result.success && result.rspCode === '000000') {
         yield put({
           type: 'query',
           payload: {

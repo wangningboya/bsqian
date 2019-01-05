@@ -34,5 +34,8 @@ module.exports = {
     getIssue: `wy/issue/getIssue`,
     getProject: `wy/project/getProjectList`,
     saveProject: `wy/project/saveProject`,
+    deleteProjectById: `wy/project/deleteProjectById`,
+    deleteIssueById: `wy/issue/deleteIssueById`,
+    closeIssueById: `wy/issue/closeIssueById`,
   },
 }

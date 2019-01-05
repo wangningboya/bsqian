@@ -49,7 +49,12 @@ const Project = ({ loading, dispatch, form, project }) => {
     }
 
     const onDeleteItem = (id) => {
-        console.log(id)
+        dispatch({
+            type: "project/deleteProject",
+            payload: {
+                id: id
+            }
+        })
     }
 
     const ColProps = {
@@ -106,20 +111,20 @@ const Project = ({ loading, dispatch, form, project }) => {
 
     const toState2 = (a) => {
         switch (a) {
-          case 0:
-            return "立项";
-          case 1:
-            return "投标";
-          case 2:
-            return "签约";
-          case 3:
-            return "验收";
-          case 4:
-            return "维护";
-          default:
-            return "";
+            case 0:
+                return "立项";
+            case 1:
+                return "投标";
+            case 2:
+                return "签约";
+            case 3:
+                return "验收";
+            case 4:
+                return "维护";
+            default:
+                return "";
         }
-      }
+    }
 
     //时间转换
     const toDate = (a) => {
@@ -158,16 +163,21 @@ const Project = ({ loading, dispatch, form, project }) => {
         fields = handleFields(fields)
         dispatch({
             type: "project/query",
-            payload: fields
+            payload: {
+                projectName: fields.projectName2,
+                state: fields.state2,
+                setupTimeStart: fields.setupTimeStart,
+                setupTimeEnd: fields.setupTimeEnd,
+            }
         })
     }
 
     const handleFields = (fields) => {
-        const { setupTime } = fields
-        if (setupTime !== undefined) {
-            fields.setupTimeStart = setupTime[0].format('YYYY-MM-DD')
-            fields.setupTimeEnd = setupTime[1].format('YYYY-MM-DD')
-            delete fields.setupTime
+        const { setUpDate2 } = fields
+        if (setUpDate2 !== undefined) {
+            fields.setupTimeStart = setUpDate2[0].format('YYYY-MM-DD')
+            fields.setupTimeEnd = setUpDate2[1].format('YYYY-MM-DD')
+            delete fields.setUpDate2
         }
         return fields
     }
@@ -182,12 +192,17 @@ const Project = ({ loading, dispatch, form, project }) => {
     const listChange = (pagination) => {
         let fields = getFieldsValue();
         fields = handleFields(fields)
-        fields.pageNum = pagination.current,
-            fields.pageSize = pagination.pageSize,
-            dispatch({
-                type: "project/query",
-                payload: fields
-            })
+        dispatch({
+            type: "project/query",
+            payload: {
+                pageNum: pagination.current,
+                pageSize: pagination.pageSize,
+                projectName: fields.projectName2,
+                state: fields.state2,
+                setupTimeStart: fields.setupTimeStart,
+                setupTimeEnd: fields.setupTimeEnd,
+            }
+        })
     }
 
     const formItemLayout = {

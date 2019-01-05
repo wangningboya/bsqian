@@ -12,21 +12,21 @@ const Option = Select.Option
 const TextArea = Input.TextArea
 const Search = Input.Search
 const confirm = Modal.confirm
-const {ISSUE_CLOSED , ISSUE_EDIT, ISSUE_DELETE} = config
+const { ISSUE_CLOSED, ISSUE_EDIT, ISSUE_DELETE } = config
 
 const Issue = ({ loading, dispatch, form, issue }) => {
   const { getFieldDecorator, getFieldValue, resetFields } = form
   const { issueList, pagination, modalVisible, modalTitle, issueType, record, toState, permissions } = issue
 
   let menuOptions = []
-  if(permissions.includes(ISSUE_EDIT)){
+  if (permissions.includes(ISSUE_EDIT)) {
     menuOptions.push({ key: '1', name: '编辑' })
   }
-  if(permissions.includes(ISSUE_CLOSED)){
+  if (permissions.includes(ISSUE_CLOSED)) {
     menuOptions.push({ key: '2', name: '关闭' })
   }
-  if(permissions.includes(ISSUE_DELETE)){
-    menuOptions.push( { key: '3', name: '删除' })
+  if (permissions.includes(ISSUE_DELETE)) {
+    menuOptions.push({ key: '3', name: '删除' })
   }
 
 
@@ -41,20 +41,31 @@ const Issue = ({ loading, dispatch, form, issue }) => {
         },
       })
     } else if (e.key === '2') {
-      onCloseItem(record)
+      onCloseItem(record.id)
     }
   }
 
   const onEditItem = (record) => {
+    alert("xiugai")
     console.log(record)
   }
 
   const onDeleteItem = (id) => {
-    console.log(id)
+    dispatch({
+      type: "issue/deleteIssue",
+      payload: {
+        id: id
+      }
+    })
   }
 
   const onCloseItem = (id) => {
-    console.log(id)
+    dispatch({
+      type: "issue/closeIssue",
+      payload: {
+        id: id
+      }
+    })
   }
 
 

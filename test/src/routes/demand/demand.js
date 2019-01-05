@@ -90,20 +90,22 @@ const Demand = ({ demand, loading, dispatch, form }) => {
       case 0:
         return "提出需求";
       case 1:
-        return "审核未通过";
+        return "审核通过";
       case 2:
-        return "预估时间";
+        return "审核未通过";
       case 3:
-        return "开发开始";
+        return "预估时间";
       case 4:
-        return "开发暂停";
+        return "开发开始";
       case 5:
-        return "开发结束";
+        return "开发暂停";
       case 6:
-        return "开发关闭";
+        return "开发结束";
       case 7:
-        return "验收通过";
+        return "开发关闭";
       case 8:
+        return "验收通过";
+      case 9:
         return "验收未通过";
       default:
         return "";
