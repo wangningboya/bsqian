@@ -1,7 +1,7 @@
 import { api } from '../utils/config'
 import request from '../utils/request'
 
-const { getIssueList, addIssue2, getIssue, deleteIssueById, closeIssueById } = api
+const { getIssueList, addIssue2, getIssue, deleteIssueById, closeIssueById, accQuery2,projectQuery2 } = api
 
 export async function issueQuery(params) {
   return request({
@@ -43,4 +43,18 @@ export async function closeIssue(params) {
   })
 }
 
+export async function projectQuery(params) {
+  return request({
+    url: projectQuery2,
+    method: 'get',
+    data: params,
+  })
+}
 
+export async function accQuery(params) {
+  return request({
+    url: accQuery2,
+    method: 'get',
+    data: params,
+  })
+}

@@ -52,6 +52,7 @@ export default {
             message.error(result.rspMsg)
           }
         },
+
         * modalQuery ({
         payload = {},
         }, { select, call, put }) {
@@ -69,6 +70,7 @@ export default {
             message.error("查询失败")
           }
         },
+        
         * addDemand ({
         payload = {},
         }, { select, call, put }) {
