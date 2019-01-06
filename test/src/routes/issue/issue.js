@@ -46,8 +46,22 @@ const Issue = ({ loading, dispatch, form, issue }) => {
   }
 
   const onEditItem = (record) => {
-    alert("xiugai")
     console.log(record)
+    //新增问题
+    resetFields()
+    dispatch({
+      type: "issue/updateState",
+      payload: {
+        modalVisible: true,
+        record,
+        issueType: "1",
+      }
+    })
+    // dispatch({
+    //   type: "issue/modalQuery",
+    //   payload: {
+    //   }
+    // })
   }
 
   const onDeleteItem = (id) => {
@@ -174,6 +188,7 @@ const Issue = ({ loading, dispatch, form, issue }) => {
     dispatch({
       type: userurl,
       payload: {
+        issueId: record.id,
         issueName: getFieldValue("issueName"),
         issueNo: getFieldValue("issueNo"),
         issueContent: getFieldValue("issueContent"),

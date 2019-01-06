@@ -14,7 +14,7 @@ const FormItem = Form.Item
 const { ISSUE_TRANSFER } = config
 
 const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
-    const { getFieldDecorator, getFieldValue, getFieldsValue } = form
+    const { getFieldDecorator, getFieldValue, getFieldsValue, resetFields } = form
     const { user, issue, createModalVisible, record, projectList, accList } = issueprofile
 
     const confirm = Modal.confirm;
@@ -24,11 +24,13 @@ const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
 
     const transfer = (e) => {
         if (user.permissions.includes(ISSUE_TRANSFER)) {
+            resetFields()
             dispatch({
                 type: 'issueprofile/showModal',
                 payload: {
                     record: {
-                        demandNo: "D" + timeNow
+                        demandNo: "D" + timeNow,
+                        issueId: e.id
                     }
                 }
             })
@@ -36,7 +38,7 @@ const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
                 type: "issueprofile/modalQuery",
                 payload: {
                 }
-              })
+            })
         } else {
             message.warning('没有权限，请与管理员联系');
         }
@@ -51,23 +53,35 @@ const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
     }
     const timeNow = toDate(new Date())
 
+    //点击modal的取消或者ESC
+    const close = () => {
+        dispatch({
+            type: "issueprofile/updateState",
+            payload: {
+                createModalVisible: false,
+            }
+        })
+    }
+
     const createModalProps = {
         item: issue,
         visible: createModalVisible,
-        maskClosable: false,
+        maskClosable: true,
         confirmLoading: loading.effects['issueprofile/update'],
         title: '问题转需求',
-        onOk(data) {
-            dispatch({
-                type: 'issueprofile/createDemand',
-                payload: data,
-            })
-        },
-        onCancel() {
-            dispatch({
-                type: 'issueprofile/hideModal',
-            })
-        },
+        onCancel: close,
+        // onOk(data) {
+        //     dispatch({
+        //         type: 'issueprofile/createDemand',
+        //         payload: data,
+        //     })
+        // },
+        // onCancel() {
+        //     alert("asdasdasd")
+        //     dispatch({
+        //         type: 'issueprofile/hideModal',
+        //     })
+        // },
     }
 
     const formItemLayout = {
@@ -84,11 +98,12 @@ const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
         dispatch({
             type: "issueprofile/issueToDemand",
             payload: {
-                demandName:getFieldValue("demandName"),
-                demandNo:getFieldValue("demandNo"),
-                demandDes:getFieldValue("demandDes"),
-                projectId:getFieldValue("projectName"),
-                accId:getFieldValue("accName"),
+                issueId: record.issueId,
+                demandName: getFieldValue("demandName"),
+                demandNo: getFieldValue("demandNo"),
+                demandDes: getFieldValue("demandDes"),
+                projectId: getFieldValue("projectName"),
+                accId: getFieldValue("accName"),
             }
         })
     }
@@ -128,6 +143,7 @@ const IssueProfile = ({ issueprofile, loading, dispatch, form }) => {
                 <Form>
                     <FormItem label="需求名称" {...formItemLayout}>
                         {getFieldDecorator("demandName", {
+                            initialValue: record.demandName,
                             rules: [
                                 {
                                     required: true,

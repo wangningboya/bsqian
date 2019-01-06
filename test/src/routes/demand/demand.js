@@ -203,14 +203,6 @@ const Demand = ({ demand, loading, dispatch, form }) => {
     },
   }
 
-
-
-  //   const addonBefore = (
-  //     <p>{"D"+toDate(new Date().toString())}</p>
-  //   )
-
-
-
   //项目改变获取项目经理名字
   const projectChange = (value) => {
     projectList.map((items, i) => {

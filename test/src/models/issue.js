@@ -9,6 +9,7 @@ export default {
   state: {
     issueList: [],
     modalVisible: false,
+    editModalVisible: false,
     record: {},
     permissions: [],
     toState: {
@@ -59,6 +60,28 @@ export default {
     },
 
     * addIssue({
+      payload = {},
+    }, { select, call, put }) {
+      const result = yield call(addIssue, payload)
+      if (result && result.success && result.rspCode === '000000') {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalVisible: false
+          },
+        })
+        yield put({
+          type: 'query',
+          payload: {
+
+          }
+        })
+      } else {
+        message.error(result.rspMsg)
+      }
+    },
+
+    * updateIssue({
       payload = {},
     }, { select, call, put }) {
       const result = yield call(addIssue, payload)

@@ -37,5 +37,6 @@ module.exports = {
     deleteProjectById: `wy/project/deleteProjectById`,
     deleteIssueById: `wy/issue/deleteIssueById`,
     closeIssueById: `wy/issue/closeIssueById`,
+    issueToDemand2: `wy/issue/issueToDemand`,
   },
 }

@@ -1,4 +1,4 @@
-import { getIssueById, projectQuery, accQuery } from '../services/issue'
+import { getIssueById, projectQuery, accQuery, issueToDemand } from '../services/issue'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 import pathToRegexp from 'path-to-regexp'
@@ -70,17 +70,25 @@ export default {
         * issueToDemand({
             payload = {},
         }, { select, call, put }) {
-            console.log(payload)
-            const result = yield call(accQuery)
+            const result = yield call(issueToDemand, payload)
+            const issueId = payload.issueId
+            console.log(issueId)
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',
                     payload: {
-                       
+                        createModalVisible: false,
+                        record:{}
                     },
                 })
+                yield put({
+                    type: 'query',
+                    payload: {
+                        id: issueId
+                    }
+                })
             } else {
-                message.error("查询失败")
+                message.error("转换失败")
             }
         },
 
