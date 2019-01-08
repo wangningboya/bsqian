@@ -5,11 +5,12 @@ import request from '../utils/request'
 
 const { userLogin2 } = api
 
-export async function userLogin (params) {
-    return request({
-      url: userLogin2,
-      method: 'get',
-      data: params,
-    })
-  }
+export async function userLogin(params) {
+  return request({
+    url: userLogin2,
+    method: 'get',
+    data: params,
+  })
+}
+
 

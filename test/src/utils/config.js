@@ -13,6 +13,7 @@ module.exports = {
 
   api: {
     userLogin2: `/wy/login/login`,
+    userRegister2: `/wy/login/register`,
     logout2: `/wy/login/logout`,
     userQuery2: `/wy/user/userQuery`,
     userQuery3: `/wy/user/getUserAndMenu`,
@@ -38,5 +39,6 @@ module.exports = {
     deleteIssueById: `wy/issue/deleteIssueById`,
     closeIssueById: `wy/issue/closeIssueById`,
     issueToDemand2: `wy/issue/issueToDemand`,
+    checkUserName: `wy/user/checkUserName`,
   },
 }

@@ -13,6 +13,10 @@ const routes = [
     models: () => [import('./models/login')],
     component: () => import('./routes/login/login'),
   },{
+    path: '/register',
+    models: () => [import('./models/register')],
+    component: () => import('./routes/login/register'),
+  },{
     path: '/index',
     models: () => [import('./models/home')],
     component: () => import('./routes/home/home'),

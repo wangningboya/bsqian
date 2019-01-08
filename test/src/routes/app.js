@@ -20,6 +20,13 @@ const App =({children, location, dispatch, app}) => {
                 </div>
                 )
         }
+        if(pathname==='/register'){
+            return (
+                <div>
+                    {children}
+                </div>
+                )
+        }
         const headerProps = {
             user,
             logout () {
