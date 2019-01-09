@@ -17,6 +17,10 @@ const routes = [
     models: () => [import('./models/register')],
     component: () => import('./routes/login/register'),
   },{
+    path: '/userInfo',
+    models: () => [import('./models/userInfo')],
+    component: () => import('./routes/user/userInfo'),
+  },{
     path: '/index',
     models: () => [import('./models/home')],
     component: () => import('./routes/home/home'),

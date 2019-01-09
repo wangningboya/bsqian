@@ -46,7 +46,6 @@ const Issue = ({ loading, dispatch, form, issue }) => {
   }
 
   const onEditItem = (record) => {
-    console.log(record)
     //新增问题
     resetFields()
     dispatch({

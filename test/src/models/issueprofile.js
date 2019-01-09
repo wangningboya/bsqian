@@ -72,7 +72,6 @@ export default {
         }, { select, call, put }) {
             const result = yield call(issueToDemand, payload)
             const issueId = payload.issueId
-            console.log(issueId)
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',

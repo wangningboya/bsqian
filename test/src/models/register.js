@@ -22,7 +22,6 @@ export default {
       payload = {},
     }, { select, call, put }) {
       const result = yield call(userRegister, payload)
-      console.log(result)
       if (result && result.success && result.rspCode === '000000') {
         message.success(result.rspMsg)
         sessionStorage.setItem('userName', result.data)

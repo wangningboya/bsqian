@@ -17,6 +17,7 @@ module.exports = {
     logout2: `/wy/login/logout`,
     userQuery2: `/wy/user/userQuery`,
     userQuery3: `/wy/user/getUserAndMenu`,
+    editUser2: `/wy/user/editUser`,
     demandQuery2: `/wy/demand/getDemandList`,
     getDemand: `/wy/demand/getDemand`,
     projectQuery2: `wy/project/findProject`,
