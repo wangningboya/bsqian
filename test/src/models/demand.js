@@ -1,6 +1,5 @@
 import { demandQuery,projectQuery,accQuery,addDemand, updateDemand } from '../services/demand'
 import { message } from 'antd'
-import { routerRedux } from 'dva/router'
 
 export default {
 
@@ -117,12 +116,14 @@ export default {
       },
 
       reducers: {
+
         updateState (state, { payload }) {
           return {
             ...state,
             ...payload,
           }
         },
+        
       },
 
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Page } from 'components'
+import { Page } from '../../../components'
 import moment from 'moment';
 import { Row, Col, Button, Tree, Input, Icon, Card, Modal } from 'antd'
 import CreateModal from './Modal'

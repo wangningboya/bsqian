@@ -45,5 +45,7 @@ module.exports = {
     archCreate: `wy/arch/archCreate`,
     archRemove: `wy/arch/archRemove`,
     archUpdate: `wy/arch/archUpdate`,
+    peoples: `wy/people/query`,
+    createTeam2: `wy/people/createTeam`,
   },
 }
