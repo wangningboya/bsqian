@@ -48,6 +48,10 @@ const routes = [
     path: '/project',
     models: () => [import('./models/project')],
     component: () => import('./routes/project/project'),
+  },{
+    path: '/arch',
+    models: () => [import('./models/arch')],
+    component: () => import('./routes/resource/arch/arch'),
   },
   
 ]

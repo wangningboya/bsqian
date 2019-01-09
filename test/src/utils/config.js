@@ -41,5 +41,9 @@ module.exports = {
     closeIssueById: `wy/issue/closeIssueById`,
     issueToDemand2: `wy/issue/issueToDemand`,
     checkUserName: `wy/user/checkUserName`,
+    archs: `wy/arch/getArchs`,
+    archCreate: `wy/arch/archCreate`,
+    archRemove: `wy/arch/archRemove`,
+    archUpdate: `wy/arch/archUpdate`,
   },
 }
