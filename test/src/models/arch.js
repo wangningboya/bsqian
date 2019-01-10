@@ -39,7 +39,6 @@ export default {
       const result = yield call(query, payload)
       if (result && result.success && result.rspCode === '000000') {
         const archTree = arrayToTree(result.data, 'id', 'parentId')
-        console.log(archTree)
         yield put({
           type: 'updateState',
           payload: {

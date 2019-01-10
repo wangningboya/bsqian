@@ -39,11 +39,6 @@ export default {
       payload,
     }, { call, put }) {
       const result = yield call(query, payload)
-      // console.log(result)
-      // console.log(result.data.data)
-      // console.log(result.data.team)
-      // console.log(result.data.candidate)
-      // return
       if (result.success) {
         yield put({
           type: 'updateState',
@@ -61,8 +56,6 @@ export default {
     * createTeam({
       payload,
     }, { call, put }) {
-      console.log("createTeam")
-      console.log(payload)
       const data = yield call(createTeam, payload)
       if (data.success) {
         message.success(data.rspMsg)

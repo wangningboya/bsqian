@@ -51,5 +51,10 @@ module.exports = {
     getout2: `wy/people/getout`,
     dismiss2: `wy/people/dismiss`,
     timeline: `wy/people/resTimeLine`,
+    organization: `wy/organization/query`,
+    createOrg: `wy/organization/createOrg`,
+    updateOrg: `wy/organization/updateOrg/:id`,
+    removeOrg: `wy/organization/removeOrg/:id`,
+    createOrgResType: `wy/organization/createOrgResType`,
   },
 }

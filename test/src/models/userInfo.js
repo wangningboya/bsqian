@@ -36,7 +36,6 @@ export default {
             payload = {},
         }, { select, call, put }) {
             const result = yield call(userQuery, payload)
-            console.log("111")
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',
@@ -53,7 +52,6 @@ export default {
             payload = {},
         }, { select, call, put }) {
             const result = yield call(editUser, payload)
-            console.log(result)
             if (result && result.success && result.rspCode === '000000') {
                 message.success(result.rspMsg)
                 yield put({

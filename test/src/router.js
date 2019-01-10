@@ -56,6 +56,10 @@ const routes = [
     path: '/people',
     models: () => [import('./models/people')],
     component: () => import('./routes/resource/people/people'),
+  },{
+    path: '/organization',
+    models: () => [import('./models/organization')],
+    component: () => import('./routes/resource/org/organization'),
   },
   
 ]
