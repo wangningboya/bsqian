@@ -50,6 +50,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                message: '请选择Leader',
               },
             ],
           })(<Select>

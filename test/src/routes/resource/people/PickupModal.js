@@ -43,7 +43,7 @@ const modal = ({
   }
 
   return (
-    <Modal {...modalOpts}>
+    <Modal {...modalOpts} okText="选择" cancelText="关闭">
       <Form layout="horizontal">
         <FormItem label="团队" hasFeedback {...formItemLayout}>
           {getFieldDecorator('teamId', {
@@ -51,6 +51,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                message: '请选择团队',
               },
             ],
           })(<Select>

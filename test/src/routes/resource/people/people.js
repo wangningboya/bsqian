@@ -114,9 +114,9 @@ const People = ({ people, dispatch, loading, location }) => {
                     currentItem: info.node.props.dataRef,
                 },
             })
-            dispatch({
-                type: 'people/querytimeline',
-            })
+            // dispatch({
+            //     type: 'people/querytimeline',
+            // })
         } else if (info.node.props.dataRef.type === 4) {
             dispatch({
                 type: 'people/updateState',

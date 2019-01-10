@@ -72,10 +72,22 @@ export default {
       }
     },
 
-    * remove({
+    * pickup({
       payload,
     }, { call, put }) {
-      const data = yield call(remove, payload)
+      const data = yield call(pickup, payload)
+      if (data.success) {
+        yield put({ type: 'query' })
+        yield put({ type: 'hidePickupModal' })
+      } else {
+        throw data
+      }
+    },
+
+    * getout({
+      payload,
+    }, { call, put }) {
+      const data = yield call(getout, payload)
       if (data.success) {
         yield put({ type: 'query' })
       } else {
@@ -94,24 +106,12 @@ export default {
       }
     },
 
-    * getout({
+    * remove({
       payload,
     }, { call, put }) {
-      const data = yield call(getout, payload)
+      const data = yield call(remove, payload)
       if (data.success) {
         yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    * pickup({
-      payload,
-    }, { call, put }) {
-      const data = yield call(pickup, payload)
-      if (data.success) {
-        yield put({ type: 'query' })
-        yield put({ type: 'hidePickupModal' })
       } else {
         throw data
       }
@@ -132,6 +132,7 @@ export default {
         throw data
       }
     },
+
   },
 
   reducers: {
@@ -150,6 +151,7 @@ export default {
     hideButtonGroup(state) {
       return { ...state, buttonGroupVisible: false }
     },
+
     showCreateModal(state, { payload }) {
       return { ...state, ...payload, createModalVisible: true }
     },
@@ -157,6 +159,7 @@ export default {
     hideCreateModal(state) {
       return { ...state, createModalVisible: false }
     },
+
     showPickupModal(state, { payload }) {
       return { ...state, ...payload, pickupModalVisible: true }
     },
