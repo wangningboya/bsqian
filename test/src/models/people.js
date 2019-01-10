@@ -65,10 +65,11 @@ export default {
       console.log(payload)
       const data = yield call(createTeam, payload)
       if (data.success) {
+        message.success(data.rspMsg)
         yield put({ type: 'query' })
         yield put({ type: 'hideCreateModal' })
       } else {
-        throw data
+        message.error(data.rspMsg)
       }
     },
 
@@ -77,10 +78,11 @@ export default {
     }, { call, put }) {
       const data = yield call(pickup, payload)
       if (data.success) {
+        message.success(data.rspMsg)
         yield put({ type: 'query' })
         yield put({ type: 'hidePickupModal' })
       } else {
-        throw data
+        message.error(data.rspMsg)
       }
     },
 
@@ -89,9 +91,10 @@ export default {
     }, { call, put }) {
       const data = yield call(getout, payload)
       if (data.success) {
+        message.success(data.rspMsg)
         yield put({ type: 'query' })
       } else {
-        throw data
+        message.error(data.rspMsg)
       }
     },
 
@@ -100,9 +103,10 @@ export default {
     }, { call, put }) {
       const data = yield call(dismiss, payload)
       if (data.success) {
+        message.success(data.rspMsg)
         yield put({ type: 'query' })
       } else {
-        throw data
+        message.error(data.rspMsg)
       }
     },
 
@@ -129,7 +133,7 @@ export default {
           },
         })
       } else {
-        throw data
+        message.error(data.rspMsg)
       }
     },
 

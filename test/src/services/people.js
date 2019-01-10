@@ -45,7 +45,7 @@ export async function dismiss(params) {
 
 export async function restimeline(params) {
   return request({
-    url: timeline.concat('/res'),
+    url: timeline,
     method: 'get',
     data: params,
   })

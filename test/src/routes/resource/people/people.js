@@ -83,7 +83,6 @@ const People = ({ people, dispatch, loading, location }) => {
     }
 
     const onSelect = (selectedKeys, info) => {
-        console.log("select")
         if (info.node.props.dataRef.type === 0) {
             dispatch({
                 type: 'people/updateState',
@@ -114,9 +113,9 @@ const People = ({ people, dispatch, loading, location }) => {
                     currentItem: info.node.props.dataRef,
                 },
             })
-            // dispatch({
-            //     type: 'people/querytimeline',
-            // })
+            dispatch({
+                type: 'people/querytimeline',
+            })
         } else if (info.node.props.dataRef.type === 4) {
             dispatch({
                 type: 'people/updateState',
@@ -206,7 +205,7 @@ const People = ({ people, dispatch, loading, location }) => {
                                 {<div><h3> 工作历程 </h3> <br /> </div>}
                                 <Timeline>
                                     {timelineData.map((item, index) => {
-                                        return <Timeline.Item key={index}> {item.logContant.concat(' ').concat(moment(item.occurTime).format('YYYY-MM-DD'))}</Timeline.Item>
+                                        return <Timeline.Item key={index}> {item.logContent.concat(' ').concat(moment(item.occurTime).format('YYYY-MM-DD HH:mm:ss'))}</Timeline.Item>
                                     })}
                                 </Timeline>
                             </Card.Grid>
