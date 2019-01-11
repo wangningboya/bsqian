@@ -3,27 +3,11 @@ import request from '../utils/request'
 
 // import {api, request} from 'utils'
 
-const { userQuery2, getDemandListByDevId, getDemandListByCreactName } = api
+const { indexQuery } = api
 
-export async function userQuery (params) {
+export async function query (params) {
     return request({
-      url: userQuery2,
-      method: 'get',
-      data: params,
-    })
-  }
-
-  export async function myTask (params) {
-    return request({
-      url: getDemandListByDevId,
-      method: 'get',
-      data: params,
-    })
-  }
-
-  export async function myCreate (params) {
-    return request({
-      url: getDemandListByCreactName,
+      url: indexQuery,
       method: 'get',
       data: params,
     })

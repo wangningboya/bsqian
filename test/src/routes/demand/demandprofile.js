@@ -230,8 +230,8 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                             })(<InputNumber />)}
                             开发人员：
                             {getFieldDecorator('devId', {
-                            })(<Select style={{ width: 100 }}>
-                                {devList.map(item => { return <Option key={item.id} value={item.id}>{item.realName}</Option> })}
+                            })(<Select style={{ width: 150 }}>
+                                {devList.map(item => { return <Option key={item.id} value={item.userId}>{item.resName}</Option> })}
                             </Select>)}
                         </div>
                     </Modal>}

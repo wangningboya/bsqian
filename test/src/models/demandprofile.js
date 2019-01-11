@@ -38,6 +38,7 @@ export default {
             const result = yield call(getDemandById, payload)
             const demandLog = yield call(getDemandLogById, payload)
             const devResult = yield call(getDev)
+            console.log(devResult)
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',
