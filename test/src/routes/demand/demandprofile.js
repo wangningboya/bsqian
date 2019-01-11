@@ -8,7 +8,7 @@ import { supportsGoWithoutReloadUsingHash } from 'history/DOMUtils';
 import moment from "moment";
 
 const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
-    const { demand, reviewModalVisible, predictModalVisible, devList, demandLogList } = demandprofile
+    const { demand, reviewModalVisible, predictModalVisible, devList, demandLogList, demandTime } = demandprofile
     const { getFieldDecorator, getFieldValue } = form
 
     const confirm = Modal.confirm;
@@ -50,17 +50,17 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
         confirm({
             title: '确定暂停本需求开发吗?',
             onOk() {
-              dispatch({
-                type: 'demandprofile/pauseDev',
-                payload: {
-                    id: demand.id
-                }
-              })
+                dispatch({
+                    type: 'demandprofile/pauseDev',
+                    payload: {
+                        id: demand.id
+                    }
+                })
             },
             onCancel() {
-              
+
             },
-          });
+        });
     }
 
     //开发结束
@@ -68,18 +68,18 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
         confirm({
             title: '确定结束本需求开发吗?',
             onOk() {
-              dispatch({
-                type: 'demandprofile/endDev',
-                payload: {
-                    state:6,
-                    id: demand.id
-                }
-              })
+                dispatch({
+                    type: 'demandprofile/endDev',
+                    payload: {
+                        state: 6,
+                        id: demand.id
+                    }
+                })
             },
             onCancel() {
-              
+
             },
-          });
+        });
     }
 
     const result = (date) => {
@@ -213,6 +213,11 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                             项目编号：
                             <div className={styles.inline}>{demand.projectNo}</div>
                         </div>
+                        <div className={styles.time}>
+                            耗时：
+                            <div className={styles.inline}>{demandTime}H</div>
+                        </div>
+                        
                     </Card>
 
                     <Timeline style={{ marginTop: 20 }}>

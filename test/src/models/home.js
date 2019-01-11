@@ -10,7 +10,9 @@ export default {
     user: {},
     teams: [],
     leader: {},
-    projects:[],
+    projects: [],
+    myWorkingHours: "0",
+    teamWorkingHours: "0",
   },
 
   subscriptions: {
@@ -45,6 +47,8 @@ export default {
             teams: result.data.teams,
             leader: result.data.teamLeader,
             projects: result.data.projects,
+            myWorkingHours: result.data.myWorkingHours,
+            teamWorkingHours: result.data.teamWorkingHours,
           },
         })
       } else {

@@ -28,6 +28,7 @@ module.exports = {
     getDemandListByDevId: `wy/demand/getDemandListByDevId`,
     getDemandListByCreactName: `wy/demand/getDemandListByCreactName`,
     indexQuery: `wy/index/query`,
+    getDemandTimeById: `wy/demand/getDemandTimeById`,
     getDemandLog: `wy/demand/getDemandLogById`,
     addDemandLog: `wy/demand/addDemandLog`,
     getUsers: `wy/user/getUsers`,

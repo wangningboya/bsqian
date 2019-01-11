@@ -1,4 +1,4 @@
-import { getDemandById, getDemandLogById, reviewDemand, predictDemand, getDev, startDev, pauseDev, endDev} from '../services/demand'
+import { getDemandById, getDemandLogById, reviewDemand, predictDemand, getDev, startDev, pauseDev, endDev, getDemandTime } from '../services/demand'
 import { } from 'antd'
 import { routerRedux } from 'dva/router'
 import pathToRegexp from 'path-to-regexp'
@@ -10,9 +10,10 @@ export default {
     state: {
         demand: {},
         devList: [],
-        demandLogList:[],
+        demandLogList: [],
         reviewModalVisible: false,
-        predictModalVisible: false
+        predictModalVisible: false,
+        demandTime: "0",
     },
 
     subscriptions: {
@@ -38,14 +39,15 @@ export default {
             const result = yield call(getDemandById, payload)
             const demandLog = yield call(getDemandLogById, payload)
             const devResult = yield call(getDev)
-            console.log(devResult)
+            const demandTime = yield call(getDemandTime, payload)
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',
                     payload: {
                         demand: result.data.demand,
                         devList: devResult.data,
-                        demandLogList:demandLog.data,
+                        demandLogList: demandLog.data,
+                        demandTime: demandTime.data
                     },
                 })
             } else {
@@ -72,7 +74,7 @@ export default {
             } else {
             }
         },
-        
+
         * startDev({ payload }, { select, call, put }) {
             const id = yield select(({ demandprofile }) => demandprofile.demand.id)
             const result = yield call(startDev, payload)

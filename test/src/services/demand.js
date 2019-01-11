@@ -2,7 +2,7 @@ import { api } from '../utils/config'
 import request from '../utils/request'
 
 const { demandQuery2, projectQuery2, accQuery2, addDemand2, updateDemand2, getDemand,
-  getDemandLog, addDemandLog, getUsers, demand } = api
+  getDemandLog, addDemandLog, getUsers, demand, getDemandTimeById } = api
 
 export async function demandQuery(params) {
   return request({
@@ -47,6 +47,14 @@ export async function updateDemand(params) {
 export async function getDemandById(params) {
   return request({
     url: getDemand,
+    method: 'get',
+    data: params,
+  })
+}
+
+export async function getDemandTime(params) {
+  return request({
+    url: getDemandTimeById,
     method: 'get',
     data: params,
   })

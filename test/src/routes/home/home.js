@@ -8,8 +8,8 @@ import { Link } from 'dva/router';
 import moment from 'moment'
 // import InfiniteScroll from 'react-infinite-scroller';
 
-const Index = ({ home }) => {
-    const { user, myTaskDemandList, myCreateDemandList, leader, teams, projects } = home
+const Index = ({ home, loading }) => {
+    const { user, myTaskDemandList, myCreateDemandList, leader, teams, projects, myWorkingHours, teamWorkingHours } = home
     const getHelloWord = () => {
         let now = new Date(), hour = now.getHours()
         if (hour < 6) { return "凌晨好！" }
@@ -29,6 +29,8 @@ const Index = ({ home }) => {
                     <Avatar className={styles.avater} size="large" src="/src/img/xjj.jpg" alt="头像" />
                 </div>
                 <div className={styles.title}>{getHelloWord()}{user.realName},祝你开心每一天</div>
+                <div className={styles.meHour}>个人工时{myWorkingHours}H/120H</div>
+                <div className={styles.teamHour}>团队工时{teamWorkingHours}H</div>
             </div>
             <Row gutter={24}>
                 <Col span={16}>
