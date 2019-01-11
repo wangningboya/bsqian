@@ -17,6 +17,7 @@ export default {
     orgData: [],
     timelineData: [],
     archData: [],
+    roleList: [],
   },
 
   subscriptions: {
@@ -38,13 +39,14 @@ export default {
       payload,
     }, { call, put }) {
       const result = yield call(query, payload)
-
+      console.log(result)
       if (result && result.success && result.rspCode === '000000') {
         yield put({
           type: 'updateState',
           payload: {
             orgData: result.data.orgData,
             archData: arrayToTree(result.data.archData, 'id', 'parentId'),
+            roleList: result.data.roleList
           },
         })
       } else {

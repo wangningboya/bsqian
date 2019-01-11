@@ -197,7 +197,7 @@ const People = ({ people, dispatch, loading, location }) => {
                                     <Description term="联系方式">{currentItem.resourceTel}</Description>
                                     <Description term="电子邮箱">{currentItem.resourceEmail}</Description>
                                     <Description term="所属部门">{currentItem.resourceDepartName}</Description>
-                                    <Description term="入职时间">{currentItem.resourceSetupDate}</Description>
+                                    <Description term="入职时间">{moment(currentItem.resourceSetupDate).format('YYYY-MM-DD')}</Description>
                                     <Description term="描述">{currentItem.resourceDescription}</Description>
                                 </DescriptionList>
                             </Card.Grid>

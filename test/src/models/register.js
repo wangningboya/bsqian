@@ -1,4 +1,4 @@
-import { userRegister, check } from '../services/register'
+import { userRegister, checkUserName, checkPhone } from '../services/register'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 
@@ -8,7 +8,8 @@ export default {
 
   state: {
     record: {},
-    flag: 0,
+    userNameFlag: 0,
+    phoneFlag:0,
   },
 
   subscriptions: {
@@ -24,37 +25,59 @@ export default {
       const result = yield call(userRegister, payload)
       if (result && result.success && result.rspCode === '000000') {
         message.success(result.rspMsg)
-        sessionStorage.setItem('userName', result.data)
+        // sessionStorage.setItem('userName', result.data)
         yield put({
           type: 'updateState',
           payload: {
           },
         })
-        yield put(routerRedux.push('/index'))
+        yield put(routerRedux.push('/login'))
       } else {
         message.error(result.rspMsg)
       }
     },
 
-    * check({
+    * checkUserName({
       payload = {},
     }, { select, call, put }) {
-      const result = yield call(check, payload)
+      const result = yield call(checkUserName, payload)
       if (result && result.success && result.rspCode === '1') {
         yield put({
           type: 'updateState',
           payload: {
-            flag: 1
+            userNameFlag: 1
           },
         })
       } else {
         yield put({
           type: 'updateState',
           payload: {
-            flag: 0
+            userNameFlag: 0
           },
         })
         message.error("账号重复")
+      }
+    },
+
+    * checkPhone({
+      payload = {},
+    }, { select, call, put }) {
+      const result = yield call(checkPhone, payload)
+      if (result && result.success && result.rspCode === '1') {
+        yield put({
+          type: 'updateState',
+          payload: {
+            phoneFlag: 1
+          },
+        })
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            phoneFlag: 0
+          },
+        })
+        message.error("手机号重复")
       }
     },
 

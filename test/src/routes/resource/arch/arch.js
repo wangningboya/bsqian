@@ -140,7 +140,7 @@ const Arch = ({ arch, dispatch, loading, location }) => {
             <DescriptionList size="small" style={{ marginBottom: 16 }}>
               <Description term="部门名称">{currentItem.depName}</Description>
               <Description term="部门代码">{currentItem.depCode}</Description>
-              <Description term="创立时间">{moment(currentItem.createTime).format("YYYY-MM-DD")}{}</Description>
+              <Description term="创立时间">{moment(currentItem.createTime).format("YYYY-MM-DD")}</Description>
             </DescriptionList>
           </Card>
         </Col>

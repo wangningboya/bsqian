@@ -7,26 +7,40 @@ const FormItem = Form.Item
 
 const Register = ({ userRegister, dispatch, form }) => {
 
+    const { userNameFlag, phoneFlag } = userRegister
     const { getFieldDecorator, validateFieldsAndScroll, validFunction, getFieldValue } = form
-    const { flag } = userRegister
+
     function register() {
-        if (flag === 1) {
-            validateFieldsAndScroll((errors, values) => {
-                dispatch({
-                    type: 'userRegister/register',
-                    payload: values
-                })
-            })
-        } else {
+        if (userNameFlag === 0) {
             message.error("账号重复")
+            return;
         }
+        if (phoneFlag === 0) {
+            message.error("手机号重复")
+            return;
+        }
+        validateFieldsAndScroll((errors, values) => {
+            dispatch({
+                type: 'userRegister/register',
+                payload: values
+            })
+        })
     }
 
-    function check() {
+    function checkUserName() {
         dispatch({
-            type: 'userRegister/check',
+            type: 'userRegister/checkUserName',
             payload: {
                 userName: getFieldValue("userName"),
+            }
+        })
+    }
+
+    function checkPhone() {
+        dispatch({
+            type: 'userRegister/checkPhone',
+            payload: {
+                phone: getFieldValue("phone"),
             }
         })
     }
@@ -72,7 +86,7 @@ const Register = ({ userRegister, dispatch, form }) => {
                             // }
                         ]
                     })(
-                        <Input placeholder="用户名" autoComplete="off" onBlur={check} />
+                        <Input placeholder="用户名" autoComplete="off" onBlur={checkUserName} />
                     )}
                 </FormItem>
                 <FormItem label="密码" {...formItemLayout}>
@@ -104,13 +118,25 @@ const Register = ({ userRegister, dispatch, form }) => {
                 <FormItem label="手机" {...formItemLayout}>
                     {getFieldDecorator('phone', {
                         initialValue: "",
+                        rules: [
+                            {
+                                required: true,
+                                message: '不能为空',
+                            }
+                        ],
                     })(
-                        <Input placeholder="手机" autoComplete="off" />
+                        <Input placeholder="手机" autoComplete="off" onBlur={checkPhone} />
                     )}
                 </FormItem>
                 <FormItem label="邮箱" {...formItemLayout}>
                     {getFieldDecorator('email', {
                         initialValue: "",
+                        rules: [
+                            {
+                                type: 'email', message: '输入的E-mail格式不符!',
+                            }, {
+                                required: true, message: '请输入E—mail!',
+                            }],
                     })(
                         <Input placeholder="邮箱" autoComplete="off" />
                     )}

@@ -15,20 +15,10 @@ const Search = Input.Search
 const confirm = Modal.confirm
 const { Description } = DescriptionList
 
-const timeLineData = [
-  {
-    logTypeName: '进入公司',
-    logContant: '加入鑫义大家庭',
-    occurTime: '2017-07-02',
-  }, {
-    logTypeName: '进入项目组',
-    logContant: '进入了王小二团队',
-    occurTime: '2017-07-10',
-  },
-]
-
 const Organization = ({ organization, dispatch, loading, location }) => {
-  const { archData, timelineData, orgData, resModalVisible, buttonGroupVisible, buttonResTypeVisible, deleteButtonVisible, modalVisible, modalType, currentItem } = organization
+  const { archData, timelineData, orgData, resModalVisible,
+    buttonGroupVisible, buttonResTypeVisible, deleteButtonVisible,
+    modalVisible, modalType, currentItem, roleList } = organization
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
@@ -36,6 +26,7 @@ const Organization = ({ organization, dispatch, loading, location }) => {
     visible: modalVisible,
     maskClosable: false,
     modalType,
+    roleList,
     archData,
     confirmLoading: loading.effects['organization/update'],
     title: `${modalType === 'create' ? '创建资源' : '编辑资源'}`,

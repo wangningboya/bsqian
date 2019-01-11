@@ -4,6 +4,7 @@ import { Form, Input, Modal, Select, DatePicker, Cascader } from 'antd'
 import moment from 'moment'
 
 const FormItem = Form.Item
+const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -20,6 +21,7 @@ const modal = ({
   item = {},
   parentItem = {},
   archData,
+  roleList,
   onOk,
   form: {
     getFieldDecorator,
@@ -99,6 +101,23 @@ const modal = ({
               },
             ],
           })(<Cascader options={archData} onChange={onChange} />)}
+        </FormItem>
+        <FormItem label="角色" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('resRoleId', {
+            initialValue: item.resRoleId,
+            rules: [
+              {
+                required: true,
+                message: '请输选择角色!',
+              },
+            ],
+          })(
+            <Select>
+              {roleList.map((items, index) => {
+                return <Option key={`${index}`} value={`${items.id}`}>{items.roleName}</Option>
+              })}
+            </Select>
+          )}
         </FormItem>
         <FormItem label="联系方式" hasFeedback {...formItemLayout}>
           {getFieldDecorator('resourceTel', {
