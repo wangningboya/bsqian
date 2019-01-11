@@ -45,7 +45,6 @@ const Project = ({ loading, dispatch, form, project }) => {
     }
 
     const onEditItem = (record) => {
-        console.log(record)
         dispatch({
             type: "project/updateState",
             payload: {
@@ -174,9 +173,6 @@ const Project = ({ loading, dispatch, form, project }) => {
 
     const handleFields = (fields) => {
         const { setUpDate2 } = fields
-        console.log("setUpDate2")
-        console.log(setUpDate2)
-        console.log("setUpDate2")
         if (setUpDate2 !== undefined && setUpDate2.length !== 0) {
             fields.setupTimeStart = setUpDate2[0].format('YYYY-MM-DD')
             fields.setupTimeEnd = setUpDate2[1].format('YYYY-MM-DD')

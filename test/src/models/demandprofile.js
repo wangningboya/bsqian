@@ -1,5 +1,5 @@
-import { getDemandById, getDemandLogById, reviewDemand, predictDemand, getDev, startDev, pauseDev, endDev, getDemandTime } from '../services/demand'
-import { } from 'antd'
+import { getDemandById, getDemandLogById, reviewDemand, predictDemand, getDev, startDev, pauseDev, endDev, getDemandTime, getCurrentUser, passDev, failDev } from '../services/demand'
+import { message } from 'antd'
 import { routerRedux } from 'dva/router'
 import pathToRegexp from 'path-to-regexp'
 
@@ -14,6 +14,7 @@ export default {
         reviewModalVisible: false,
         predictModalVisible: false,
         demandTime: "0",
+        currentUser: {}
     },
 
     subscriptions: {
@@ -40,6 +41,9 @@ export default {
             const demandLog = yield call(getDemandLogById, payload)
             const devResult = yield call(getDev)
             const demandTime = yield call(getDemandTime, payload)
+            const currentUser = yield call(getCurrentUser)
+            console.log(result)
+            console.log(currentUser)
             if (result && result.success && result.rspCode === '000000') {
                 yield put({
                     type: 'updateState',
@@ -47,11 +51,12 @@ export default {
                         demand: result.data.demand,
                         devList: devResult.data,
                         demandLogList: demandLog.data,
-                        demandTime: demandTime.data
+                        demandTime: demandTime.data,
+                        currentUser: currentUser.data
                     },
                 })
             } else {
-
+                message.error(result.rspMsg)
             }
         },
 
@@ -62,6 +67,7 @@ export default {
                 yield put({ type: 'query', payload: { id: id } })
                 yield put({ type: 'hideReviewModal' })
             } else {
+                message.error(result.rspMsg)
             }
         },
 
@@ -72,6 +78,7 @@ export default {
                 yield put({ type: 'query', payload: { id: id } })
                 yield put({ type: 'hidePredictModal' })
             } else {
+                message.error(result.rspMsg)
             }
         },
 
@@ -81,6 +88,7 @@ export default {
             if (result && result.success && result.rspCode === '000000') {
                 yield put({ type: 'query', payload: { id: id } })
             } else {
+                message.error(result.rspMsg)
             }
         },
 
@@ -90,6 +98,7 @@ export default {
             if (result && result.success && result.rspCode === '000000') {
                 yield put({ type: 'query', payload: { id: id } })
             } else {
+                message.error(result.rspMsg)
             }
         },
 
@@ -99,6 +108,27 @@ export default {
             if (result && result.success && result.rspCode === '000000') {
                 yield put({ type: 'query', payload: { id: id } })
             } else {
+                message.error(result.rspMsg)
+            }
+        },
+
+        * passDev({ payload }, { select, call, put }) {
+            const id = yield select(({ demandprofile }) => demandprofile.demand.id)
+            const result = yield call(passDev, payload)
+            if (result && result.success && result.rspCode === '000000') {
+                yield put({ type: 'query', payload: { id: id } })
+            } else {
+                message.error(result.rspMsg)
+            }
+        },
+
+        * failDev({ payload }, { select, call, put }) {
+            const id = yield select(({ demandprofile }) => demandprofile.demand.id)
+            const result = yield call(failDev, payload)
+            if (result && result.success && result.rspCode === '000000') {
+                yield put({ type: 'query', payload: { id: id } })
+            } else {
+                message.error(result.rspMsg)
             }
         },
 

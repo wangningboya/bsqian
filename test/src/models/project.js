@@ -87,7 +87,6 @@ export default {
         }, { select, call, put }) {
             const result = yield call(pmQuery)
             if (result && result.success && result.rspCode === '000000') {
-                console.log(result.data.userList)
                 yield put({
                     type: 'updateState',
                     payload: {

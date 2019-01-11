@@ -2,7 +2,7 @@ import { api } from '../utils/config'
 import request from '../utils/request'
 
 const { demandQuery2, projectQuery2, accQuery2, addDemand2, updateDemand2, getDemand,
-  getDemandLog, addDemandLog, getUsers, demand, getDemandTimeById } = api
+  getDemandLog, addDemandLog, getUsers, demand, getDemandTimeById, currentUser } = api
 
 export async function demandQuery(params) {
   return request({
@@ -108,9 +108,33 @@ export async function endDev(params) {
   })
 }
 
+export async function passDev(params) {
+  return request({
+    url: demand.concat('/passDev'),
+    method: 'get',
+    data: params,
+  })
+}
+
+export async function failDev(params) {
+  return request({
+    url: demand.concat('/failDev'),
+    method: 'get',
+    data: params,
+  })
+}
+
 export async function getDev(params) {
   return request({
     url: getUsers,
+    method: 'post',
+    data: params,
+  })
+}
+
+export async function getCurrentUser(params) {
+  return request({
+    url: currentUser,
     method: 'post',
     data: params,
   })

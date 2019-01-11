@@ -8,7 +8,7 @@ import { supportsGoWithoutReloadUsingHash } from 'history/DOMUtils';
 import moment from "moment";
 
 const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
-    const { demand, reviewModalVisible, predictModalVisible, devList, demandLogList, demandTime } = demandprofile
+    const { demand, reviewModalVisible, predictModalVisible, devList, demandLogList, demandTime, currentUser } = demandprofile
     const { getFieldDecorator, getFieldValue } = form
 
     const confirm = Modal.confirm;
@@ -72,6 +72,42 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                     type: 'demandprofile/endDev',
                     payload: {
                         state: 6,
+                        id: demand.id
+                    }
+                })
+            },
+            onCancel() {
+
+            },
+        });
+    }
+
+    //验收通过
+    const onPass = () => {
+        confirm({
+            title: '确定通过本需求开发吗?',
+            onOk() {
+                dispatch({
+                    type: 'demandprofile/passDev',
+                    payload: {
+                        id: demand.id
+                    }
+                })
+            },
+            onCancel() {
+
+            },
+        });
+    }
+
+    //验收未通过
+    const onFail = () => {
+        confirm({
+            title: '确定不通过本需求开发吗?',
+            onOk() {
+                dispatch({
+                    type: 'demandprofile/failDev',
+                    payload: {
                         id: demand.id
                     }
                 })
@@ -186,13 +222,13 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                 <div style={{ paddingTop: 30, marginLeft: 20, marginRight: 20 }}>
                     <Row>
                         <Col span={24} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button type="ghost" onClick={onReview} disabled={demand.state === 0 ? false : true} > 需求评审</Button>
-                            <Button type="ghost" onClick={onPredict} disabled={demand.state === 1 ? false : true} > 工时预估</Button>
-                            <Button type="ghost" onClick={onStartDev} disabled={demand.state === 3 || demand.state === 5 ? false : true} > 激活开发</Button>
-                            <Button type="ghost" onClick={onPauseDev} disabled={demand.state === 4 ? false : true} > 暂停开发</Button>
+                            <Button type="ghost" onClick={onReview} disabled={(demand.state === 0 && currentUser.userName === demand.accId) ? false : true} > 需求评审</Button>
+                            <Button type="ghost" onClick={onPredict} disabled={(demand.state === 1 && currentUser.userName === demand.accId) ? false : true} > 工时预估</Button>
+                            <Button type="ghost" onClick={onStartDev} disabled={((demand.state === 3 || demand.state === 5) && currentUser.id === demand.devId) ? false : true} > 激活开发</Button>
+                            <Button type="ghost" onClick={onPauseDev} disabled={(demand.state === 4 && currentUser.id === demand.devId) ? false : true} > 暂停开发</Button>
                             <Button type="ghost" onClick={onEndDev} disabled={demand.state === 4 && demand.state !== 6 ? false : true} > 开发结束</Button>
-                            <Button type="ghost" disabled={demand.state === 10 ? false : true} > 验收通过</Button>
-                            <Button type="ghost" disabled={demand.state === 10 ? false : true} > 验收未通过</Button>
+                            <Button type="ghost" onClick={onPass} disabled={(demand.state === 6 && currentUser.userName === demand.accId) ? false : true} > 验收通过</Button>
+                            <Button type="ghost" onClick={onFail} disabled={(demand.state === 6 && currentUser.userName === demand.accId) ? false : true} > 验收未通过</Button>
                         </Col>
                     </Row>
                     <Card title={`${demand.demandNo} - ${demand.demandName}`} >
@@ -217,7 +253,7 @@ const DemandProfile = ({ demandprofile, loading, dispatch, form }) => {
                             耗时：
                             <div className={styles.inline}>{demandTime}H</div>
                         </div>
-                        
+
                     </Card>
 
                     <Timeline style={{ marginTop: 20 }}>
