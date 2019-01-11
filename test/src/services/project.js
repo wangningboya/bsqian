@@ -19,6 +19,14 @@ export async function addProject(params) {
   })
 }
 
+export async function updateProject(params) {
+  return request({
+    url: saveProject,
+    method: 'get',
+    data: params,
+  })
+}
+
 
 export async function deleteProject(params) {
   return request({

@@ -20,7 +20,7 @@ moment.locale('zh-cn');
 
 const Project = ({ loading, dispatch, form, project }) => {
     const { getFieldDecorator, getFieldValue, resetFields, getFieldsValue } = form
-    const { projectList, pagination, modalVisible, modalTitle, projectType, record, toState, permissions, pmList } = project
+    const { projectList, pagination, modalVisible, modalTitle, projectType, record, toState, permissions, pmList, currentId } = project
 
     let menuOptions = []
     if (permissions.includes(PROJECT_EDIT)) {
@@ -46,6 +46,20 @@ const Project = ({ loading, dispatch, form, project }) => {
 
     const onEditItem = (record) => {
         console.log(record)
+        dispatch({
+            type: "project/updateState",
+            payload: {
+                modalVisible: true,
+                record,
+                projectType: "1",
+                currentId: record.id,
+            }
+        })
+        dispatch({
+            type: "project/modalQuery",
+            payload: {
+            }
+        })
     }
 
     const onDeleteItem = (id) => {
@@ -56,20 +70,6 @@ const Project = ({ loading, dispatch, form, project }) => {
             }
         })
     }
-
-    const ColProps = {
-        xs: 24,
-        sm: 12,
-        style: {
-            marginBottom: 16,
-        },
-    }
-
-    const TwoColProps = {
-        ...ColProps,
-        xl: 96,
-    }
-
 
     const columns = [
         {
@@ -174,7 +174,10 @@ const Project = ({ loading, dispatch, form, project }) => {
 
     const handleFields = (fields) => {
         const { setUpDate2 } = fields
-        if (setUpDate2 !== undefined) {
+        console.log("setUpDate2")
+        console.log(setUpDate2)
+        console.log("setUpDate2")
+        if (setUpDate2 !== undefined && setUpDate2.length !== 0) {
             fields.setupTimeStart = setUpDate2[0].format('YYYY-MM-DD')
             fields.setupTimeEnd = setUpDate2[1].format('YYYY-MM-DD')
             delete fields.setUpDate2
@@ -354,7 +357,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                     </FormItem>
                     <FormItem label="立项时间" {...formItemLayout}>
                         {getFieldDecorator("setUpDate", {
-                            initialValue: record.setUpDate,
+                            initialValue: moment(record.setUpDate),
                             rules: [
                                 {
                                     required: true,
@@ -386,7 +389,7 @@ const Project = ({ loading, dispatch, form, project }) => {
                     </FormItem>
                     <FormItem label="项目经理" {...formItemLayout}>
                         {getFieldDecorator("pmId", {
-                            initialValue: record.state,
+                            initialValue: record.pmid,
                             rules: [
                                 {
                                     required: true,
